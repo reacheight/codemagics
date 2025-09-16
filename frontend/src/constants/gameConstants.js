@@ -49,11 +49,10 @@ export const GAME_CONFIG = {
     TREE: 'tree',
     ROCK: 'rock',
     WATER: 'water',
-    WATER_TOP: 'watert',
   },
 
   // Wall types (impassable cells)
-  WALL_TYPES: ['tree', 'rock', 'watert', 'water'],
+  WALL_TYPES: ['tree', 'rock', 'water'],
 
   // Screen size breakpoints
   SCREEN: {

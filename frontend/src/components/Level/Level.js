@@ -515,7 +515,7 @@ export const Level = () => {
               <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
               {water.map((water) => (
                 <Water
-                  isTop={water.type === GAME_CONFIG.CELL_TYPES.WATER_TOP}
+                  isTop={water.x === 0 || grid[water.x - 1][water.y] !== GAME_CONFIG.CELL_TYPES.WATER}
                   key={`${water.x}${water.y}`}
                   x={water.x}
                   y={water.y}

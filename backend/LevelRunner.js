@@ -407,7 +407,7 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    const wallTypes = ['tree', 'rock', 'watert', 'water']; // TODO: Move to constants
+    const wallTypes = ['tree', 'rock', 'water']; // TODO: Move to constants
     return wallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
