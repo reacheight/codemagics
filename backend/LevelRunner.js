@@ -445,9 +445,9 @@ export default class LevelRunner {
     for (const wizard of wizardsWithZones) {
       const zone = wizard.zone;
       if (heroPosition.x >= zone.x && 
-          heroPosition.x < zone.x + zone.width &&
+          heroPosition.x < zone.x + zone.height &&
           heroPosition.y >= zone.y && 
-          heroPosition.y < zone.y + zone.height) {
+          heroPosition.y < zone.y + zone.width) {
         return true;
       }
     }

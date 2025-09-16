@@ -39,13 +39,6 @@ export const hasEnemyAround = {
     example: 'if hero.has_enemy_around():\n    enemy = hero.find_nearest_enemy()\n    hero.attack(enemy)',
 }
 
-export const isDisabled = {
-    code: 'hero.is_disabled(lever)',
-    description: 'проверяет, выключен ли рычаг `lever`',
-    example: 'if hero.is_disabled("Мост"):\n    hero.switch("Мост")',
-    autocompleteValue: 'hero.is_disabled(${1})',
-}
-
 export const fireballCommands = movingConstants.map(constants => ({
     code: `hero.fireball_${constants[0]}()`,
     description: `кидает ${constants[1]} огненный шар, который уничтожает врагов`,

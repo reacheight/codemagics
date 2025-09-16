@@ -625,7 +625,7 @@ export const levels = {
         { x: 5, y: 1, alive: true, name: "Hidden2", hidden: true },
         { x: 3, y: 1, alive: true, name: "Hidden3", hidden: true },
         { x: 1, y: 1, alive: true, name: "wizard1", hidden: true, isWizard: true, zone: { x: 3, y: 3, width: 3, height: 3 } },
-        { x: 7, y: 8, alive: true, name: "wizard2", hidden: true, isWizard: true, zone: { x: 1, y: 0, width: 2, height: 3 } },
+        { x: 7, y: 8, alive: true, name: "wizard2", hidden: true, isWizard: true, zone: { x: 1, y: 0, width: 3, height: 2 } },
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: 'Надо узнать имена этих рыцарей,\nчтобы их прогнать', required: true },

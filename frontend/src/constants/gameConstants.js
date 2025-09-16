@@ -39,7 +39,7 @@ export const GAME_CONFIG = {
 
   // Level limits
   LEVELS: {
-    MAX_LEVEL: 22,
+    MAX_LEVEL: 23,
   },
 
   // Grid cell types
