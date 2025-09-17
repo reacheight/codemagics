@@ -407,13 +407,13 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    const wallTypes = ['tree', 'rock', 'water']; // TODO: Move to constants
+    const wallTypes = ["T", "R", "W"]; // TODO: Move to constants
     return wallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isPointHitWallForFireball(point) {
     // Фаерболлы останавливаются только при попадании в твердые препятствия
-    const solidWallTypes = ['tree', 'rock']; // TODO: Move to constants
+    const solidWallTypes = ["T", "R"]; // TODO: Move to constants
     return solidWallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 

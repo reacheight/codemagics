@@ -44,15 +44,15 @@ export const GAME_CONFIG = {
 
   // Grid cell types
   CELL_TYPES: {
-    LAWN: 'lawn',
-    SAND: 'sand',
-    TREE: 'tree',
-    ROCK: 'rock',
-    WATER: 'water',
+    LAWN: "L",
+    SAND: "S",
+    TREE: "T",
+    ROCK: "R",
+    WATER: "W",
   },
 
   // Wall types (impassable cells)
-  WALL_TYPES: ['tree', 'rock', 'water'],
+  WALL_TYPES: ["T", "R", "W"],
 
   // Screen size breakpoints
   SCREEN: {
