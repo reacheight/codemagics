@@ -437,7 +437,7 @@ export const levels = {
       ],
       goals: [
         { type: 'finish', name: 'Добраться до финиша', heroText: null, required: true },
-        { type: 'big_enemy_bridge', bridgeName: "bridge1", enemyName: "BigBoy", name: 'Не дать огромному рыцарю перейти мост', heroText: 'Нам не справиться с этим огромным рыцарем,\nнельзя пропустить его на наш берег!', required: true },
+        { type: 'big_enemy_bridge', enemyName: "BigBoy", name: 'Не дать огромному рыцарю перейти мост', heroText: 'Нам не справиться с этим огромным рыцарем,\nнельзя пропустить его на наш берег!', required: true },
         { type: 'gems', name: 'Подобрать алмазы', heroText: null, required: false },
       ],
       levers: [

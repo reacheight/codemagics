@@ -1,19 +1,20 @@
 import ErrorMessageMapper from './ErrorMessageMapper.js';
 import GameplayErrorTypes from './GameplayErrorTypes.js';
-import { getDistance, arePointsEqual, calculateCodeLines, Direction } from './utils.js';
+import { getDistance, arePointsEqual, calculateCodeLines } from './utils.js';
 import esper from 'esper.js';
+import { NOT_WALKABLE_TYPES, SOLID_WALL_TYPES, EXECUTION_LIMIT, DIRECTIONS, COMMAND_NAMES } from './constants.js';
 
 export default class LevelRunner {
   hero = {
-    move_up: (steps = 1) => this.hero.move(Direction.UP, steps, 'move_up'),
-    move_down: (steps = 1) => this.hero.move(Direction.DOWN, steps, 'move_down'),
-    move_right: (steps = 1) => this.hero.move(Direction.RIGHT, steps, 'move_right'),
-    move_left: (steps = 1) => this.hero.move(Direction.LEFT, steps, 'move_left'),
+    move_up: (steps = 1) => this.hero.move(DIRECTIONS.UP, steps, COMMAND_NAMES.MOVE_UP),
+    move_down: (steps = 1) => this.hero.move(DIRECTIONS.DOWN, steps, COMMAND_NAMES.MOVE_DOWN),
+    move_right: (steps = 1) => this.hero.move(DIRECTIONS.RIGHT, steps, COMMAND_NAMES.MOVE_RIGHT),
+    move_left: (steps = 1) => this.hero.move(DIRECTIONS.LEFT, steps, COMMAND_NAMES.MOVE_LEFT),
 
-    fireball_up: () => this.hero.fireball(Direction.UP, 'fireball_up'),
-    fireball_down: () => this.hero.fireball(Direction.DOWN, 'fireball_down'),
-    fireball_right: () => this.hero.fireball(Direction.RIGHT, 'fireball_right'),
-    fireball_left: () => this.hero.fireball(Direction.LEFT, 'fireball_left'),
+    fireball_up: () => this.hero.fireball(DIRECTIONS.UP, COMMAND_NAMES.FIREBALL_UP),
+    fireball_down: () => this.hero.fireball(DIRECTIONS.DOWN, COMMAND_NAMES.FIREBALL_DOWN),
+    fireball_right: () => this.hero.fireball(DIRECTIONS.RIGHT, COMMAND_NAMES.FIREBALL_RIGHT),
+    fireball_left: () => this.hero.fireball(DIRECTIONS.LEFT, COMMAND_NAMES.FIREBALL_LEFT),
 
     attack: (targetName) => {
       if (!this.level.enemies || this.level.enemies.filter(e => e.alive).length === 0) {
@@ -21,7 +22,7 @@ export default class LevelRunner {
         return;
       }
       
-      let target = this.level.enemies.filter(e => e.alive).find(e => e.name === targetName);
+      const target = this.level.enemies.filter(e => e.alive).find(e => e.name === targetName);
       if (!target) {
         this.gameplayError = { type: GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME, name: targetName };
         return;
@@ -38,7 +39,7 @@ export default class LevelRunner {
       }
 
       target.alive = false;
-      this.pushNewCommand(`attack`, { target: targetName, isDead: !target.alive });
+      this.pushNewCommand(COMMAND_NAMES.ATTACK, { target: targetName, isDead: !target.alive });
     },
 
     switch: (leverName) => {
@@ -77,7 +78,7 @@ export default class LevelRunner {
         enemy.alive = bridge.activated;
       });
 
-      this.pushNewCommand("switch", { activatableId: lever.activatesId, enemiesOnBridge: enemiesOnBridge.map(e => e.name) });
+      this.pushNewCommand(COMMAND_NAMES.SWITCH, { activatableId: lever.activatesId, enemiesOnBridge: enemiesOnBridge.map(e => e.name) });
     },
 
     is_disabled: (leverName) => {
@@ -98,20 +99,20 @@ export default class LevelRunner {
     find_nearest_enemy: () => {
       if (!this.level.enemies || this.level.enemies.length === 0)
       {
-        this.pushNewCommand("find_nearest_enemy", { hasEnemy: false });
+        this.pushNewCommand(COMMAND_NAMES.FIND_NEAREST_ENEMY, { hasEnemy: false });
         return;
       }
 
-      let sortedAliveEnemies = this.level.enemies
+      const sortedAliveEnemies = this.level.enemies
         .filter(e => e.alive)
         .toSorted((a, b) => getDistance(this.level.hero, a) - getDistance(this.level.hero, b));
       
       if (sortedAliveEnemies.length > 0) {
-        this.pushNewCommand("find_nearest_enemy", { hasEnemy: true });
+        this.pushNewCommand(COMMAND_NAMES.FIND_NEAREST_ENEMY, { hasEnemy: true });
         return sortedAliveEnemies[0].name;
       }
 
-      this.pushNewCommand("find_nearest_enemy", { hasEnemy: false });
+      this.pushNewCommand(COMMAND_NAMES.FIND_NEAREST_ENEMY, { hasEnemy: false });
     },
 
     has_enemy_around: () => {
@@ -131,17 +132,17 @@ export default class LevelRunner {
 
       for (const point of aroundPoints) {
         if (this.getAliveEnemyAtPoint(point)) {
-          this.pushNewCommand("has_enemy_around", { hasEnemy: true });
+          this.pushNewCommand(COMMAND_NAMES.HAS_ENEMY_AROUND, { hasEnemy: true });
           return true;
         }
       }
 
-      this.pushNewCommand("has_enemy_around", { hasEnemy: false });
+      this.pushNewCommand(COMMAND_NAMES.HAS_ENEMY_AROUND, { hasEnemy: false });
       return false;
     },
 
     move: (direction, steps, methodName) => {
-      let newHeroPos = structuredClone(this.level.hero);
+      const newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;
       newHeroPos.y += direction.y * steps;
       this.updateHeroPos(newHeroPos, methodName);
@@ -171,7 +172,7 @@ export default class LevelRunner {
           break;
         }
 
-        let hitEnemy = this.getAliveEnemyAtPoint(projectilePoint);
+        const hitEnemy = this.getAliveEnemyAtPoint(projectilePoint);
         if (hitEnemy) {
           hitEnemy.alive = false;
           finalPosition = projectilePoint;
@@ -192,13 +193,12 @@ export default class LevelRunner {
     },
   };
 
-  gameplayError = null;
-
-  commands = [];
-  
   constructor(level) {
-    this.initialLevel = structuredClone(level);
+    this.gameplayError = null;
+    this.commands = [];
+    this.gemsCollected = 0;
     this.level = structuredClone(level);
+    
     this.engine = esper({
       language: 'python'
     });
@@ -206,25 +206,7 @@ export default class LevelRunner {
     this.engine.addGlobal('hero', this.hero);
   }
 
-
-
   run(code) {
-    this.gemsCollected = 0;
-    this.level = structuredClone(this.initialLevel);
-
-    // Filter gems based on guardedBy property
-    this.level.gems = this.level.gems.filter(gem => !gem.guardedBy || this.level.enemies.find(e => e.name === gem.guardedBy).alive);
-
-    // только для уровня с охраняемыми гемами
-    if (this.level.id === 'if-guarded-gems') {
-      this.ifGuardedGemsInfo = {
-        canBeOnTopIsland: this.level.enemies.find(e => e.name === 'Hidden1').alive,
-        canBeOnBottomIsland: this.level.enemies.find(e => e.name === 'Hidden2').alive,
-        topIslandEnter: { x: 1, y: 6 },
-        bottomIslandEnter: { x: 5, y: 6 },
-      };
-    }
-
     try {
       this.engine.load(code);
       let steps = 0;
@@ -237,15 +219,16 @@ export default class LevelRunner {
         if (this.level.isWhileTrue && arePointsEqual(this.level.hero, this.level.finish))
           break;
 
-        if (steps > 300) { // TODO: Move to constants
+        if (steps > EXECUTION_LIMIT) {
           this.gameplayError = { type: GameplayErrorTypes.INFINITE_LOOP };
           break;
         }
       }
     } catch (e) {
 
-      let message = ErrorMessageMapper.map(e.message);
-      let line = e.loc.line ?? e.loc.start.line;
+      const message = ErrorMessageMapper.map(e.message);
+      const line = e.loc.line ?? e.loc.start.line;
+
       return {
         errors: [
           {
@@ -291,7 +274,6 @@ export default class LevelRunner {
       case 'var bridges':
         return arePointsEqual(this.level.finish, this.level.hero);
       case 'lines':
-        console.log(calculateCodeLines(code));
         return calculateCodeLines(code) <= goal.linesCount;
       case 'gems':
         return this.gemsCollected === this.level.gems.length;
@@ -301,11 +283,7 @@ export default class LevelRunner {
         return this.level.levers.find(l => l.name === goal.leverName).enabled;
       case 'big_enemy_bridge':
         const bigEnemy = this.level.enemies.find(e => e.name === goal.enemyName);
-        if (!bigEnemy.alive)
-          return true;
-
-        const bridge = this.level.bridges.find(b => b.id === goal.bridgeName);
-        return !bridge.activated;
+        return !bigEnemy.alive;
       default:
         return false;
     }
@@ -327,7 +305,7 @@ export default class LevelRunner {
       }
 
       if (adjustedEnemy) {
-        this.pushNewCommand("enemy_attack", { isEnemyToTheLeft: adjustedEnemy.y < this.level.hero.y });
+        this.pushNewCommand(COMMAND_NAMES.ENEMY_ATTACK, { isEnemyToTheLeft: adjustedEnemy.y < this.level.hero.y });
         this.gameplayError = { type: GameplayErrorTypes.HERO_KILLED_BY_ENEMY };
         return;
       }
@@ -336,7 +314,7 @@ export default class LevelRunner {
       this.incrementAction();
 
       if (this.isHeroInWizardZone(this.level.hero)) {
-        this.pushNewCommand("hero_entered_wizard_zone");
+        this.pushNewCommand(COMMAND_NAMES.HERO_ENTERED_WIZARD_ZONE);
         this.gameplayError = { type: GameplayErrorTypes.HERO_ENTERED_WIZARD_ZONE };
         return;
       }
@@ -345,7 +323,7 @@ export default class LevelRunner {
         return;
 
       if (this.level.gems) {
-        let takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
+        const takenGem = this.level.gems.find(g => arePointsEqual(g, this.level.hero) && !g.taken)
         if (takenGem) {
           takenGem.taken = true;
           this.gemsCollected += 1;
@@ -358,10 +336,10 @@ export default class LevelRunner {
   }
 
   pushNewCommand(commandName, additionalInfo = {}) {
-    let callExpression = this.engine.evaluator.lastASTNodeProcessed.parent.parent;
-    let start = callExpression.loc.start;
-    let end = callExpression.loc.end;
-    let command = {
+    const callExpression = this.engine.evaluator.lastASTNodeProcessed.parent.parent;
+    const start = callExpression.loc.start;
+    const end = callExpression.loc.end;
+    const command = {
       name: commandName,
       start: { line: start.line, column: start.column },
       end: { line: end.line, column: end.column },
@@ -380,7 +358,7 @@ export default class LevelRunner {
 
       if (enemy.y > enemy.moveFinish.y) {
         enemy.y -= 1;
-        this.pushNewCommand("enemy_move", { enemy: enemy.name, direction: 'left' });
+        this.pushNewCommand(COMMAND_NAMES.ENEMY_MOVE, { enemy: enemy.name, direction: 'left' });
         if (arePointsEqual(enemy, enemy.moveFinish)) {
           this.gameplayError = { type: GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE };
         }
@@ -390,7 +368,7 @@ export default class LevelRunner {
 
       if (enemy.x < enemy.moveFinish.x) {
         enemy.x += 1;
-        this.pushNewCommand("enemy_move", { enemy: enemy.name, direction: 'down' });
+        this.pushNewCommand(COMMAND_NAMES.ENEMY_MOVE, { enemy: enemy.name, direction: 'down' });
         if (arePointsEqual(enemy, enemy.moveFinish)) {
           this.gameplayError = { type: GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE };
         }
@@ -407,14 +385,11 @@ export default class LevelRunner {
   }
 
   isPointHitWall(point) {
-    const wallTypes = ["T", "R", "W"]; // TODO: Move to constants
-    return wallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
+    return NOT_WALKABLE_TYPES.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isPointHitWallForFireball(point) {
-    // Фаерболлы останавливаются только при попадании в твердые препятствия
-    const solidWallTypes = ["T", "R"]; // TODO: Move to constants
-    return solidWallTypes.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
+    return SOLID_WALL_TYPES.includes(this.level.grid[point.x][point.y]) && !this.isActiveBridgePoint(point);
   }
 
   isActiveBridgePoint(point) {
