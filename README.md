@@ -1,6 +1,6 @@
 # CodeMagics
 
-[CodeMagics](https://codemagics.ru) is a [CodeCombat](https://codecombat.com)-like game to learn Python. Try it [here](https://codemagics.ru) (in Russian).
+CodeMagics is a [CodeCombat](https://codecombat.com)-like game to learn Python.
 
 
 
