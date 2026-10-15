@@ -16,7 +16,7 @@ export const DIRECTIONS = {
   UP: { x: -1, y: 0 },
   DOWN: { x: 1, y: 0 },
   LEFT: { x: 0, y: -1 },
-  RIGHT: { x: 0, y: 1 }
+  RIGHT: { x: 0, y: 1 },
 };
 
 export const COMMAND_NAMES = {

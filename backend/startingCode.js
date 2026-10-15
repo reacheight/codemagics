@@ -2,9 +2,13 @@ const defaultStartingComment = `# пиши код ниже, чтобы упра�
 
 export const startingCode = {
   ['forest']: {
-    [1]: defaultStartingComment + "# продолжи код, чтобы добраться до финиша\nhero.move_right()\n",
-    [2]: defaultStartingComment + "# напиши код, чтобы добраться до финиша\n# постарайся собрать все алмазы\n",
-    [3]: "# используй метод с параметром,\n# чтобы пройти уровень одной строчкой\n",
+    [1]:
+      defaultStartingComment +
+      '# продолжи код, чтобы добраться до финиша\nhero.move_right()\n',
+    [2]:
+      defaultStartingComment +
+      '# напиши код, чтобы добраться до финиша\n# постарайся собрать все алмазы\n',
+    [3]: '# используй метод с параметром,\n# чтобы пройти уровень одной строчкой\n',
     [4]: defaultStartingComment,
     [5]: defaultStartingComment,
     [6]: `# используй метод switch, чтобы переключить мост\n\nhero.move_right(2)\nhero.switch("Напиши название рычага")\n\n# продолжи код, чтобы  добраться до финиша\n`,
@@ -94,5 +98,5 @@ while True:
     # напиши код
     # для каждого шага цикла самостоятельно
     `,
-  }
-}
+  },
+};
