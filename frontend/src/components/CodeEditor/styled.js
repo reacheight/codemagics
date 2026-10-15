@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 export const CodeMirrorWrapper = styled.div`
   font-size: 18px;
   background: #2a2623;
-  ${({ width }) =>  css`
+  ${({ width }) => css`
     width: ${width}px;
   `};
 
@@ -20,7 +20,7 @@ export const CodeMirrorWrapper = styled.div`
     background: #2f2b29;
     overflow: hidden;
   }
-  
+
   .cm-tooltip {
     z-index: 102;
   }

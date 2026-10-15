@@ -1,13 +1,7 @@
 import React from 'react';
 import { FireballProjectile } from './styled';
 
-export const Fireball = ({ 
-  startX, 
-  startY, 
-  endX, 
-  endY,
-  range
-}) => {
+export const Fireball = ({ startX, startY, endX, endY, range }) => {
   return (
     <FireballProjectile
       startX={startX}

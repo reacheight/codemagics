@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  MapField,
-  Lawn,
-  Gem,
-  CellFilter,
-} from '../Level/styled';
+import { MapField, Lawn, Gem, CellFilter } from '../Level/styled';
 import {
   DemoLevelWrapper,
   DemoMapContainer,
@@ -24,11 +19,13 @@ const DEMO_LEVEL_COUNT = 5;
 
 const CODE_HINT = '# пиши код,\n# чтобы управлять волшебником\n\n';
 
-const DEMO_CELLS = Array(16).fill(null).map((_, index) => ({
-  x: Math.floor(index / 4),
-  y: index % 4,
-  type: GAME_CONFIG.CELL_TYPES.LAWN
-}));
+const DEMO_CELLS = Array(16)
+  .fill(null)
+  .map((_, index) => ({
+    x: Math.floor(index / 4),
+    y: index % 4,
+    type: GAME_CONFIG.CELL_TYPES.LAWN,
+  }));
 
 export const DemoLevel = () => {
   const [initialLevelData, setInitialLevelData] = useRefState(null);
@@ -58,8 +55,13 @@ export const DemoLevel = () => {
     const updatedLevelData = copy(levelData.current);
     setExecutingCommand(i);
 
-    const moveCommands = [COMMAND_NAMES.MOVE_UP, COMMAND_NAMES.MOVE_DOWN, COMMAND_NAMES.MOVE_LEFT, COMMAND_NAMES.MOVE_RIGHT];
-    
+    const moveCommands = [
+      COMMAND_NAMES.MOVE_UP,
+      COMMAND_NAMES.MOVE_DOWN,
+      COMMAND_NAMES.MOVE_LEFT,
+      COMMAND_NAMES.MOVE_RIGHT,
+    ];
+
     if (moveCommands.includes(command.name)) {
       const updatedHeroShift = copy(heroShift.current);
       const updatedHero = copy(levelData.current.hero);
@@ -99,7 +101,7 @@ export const DemoLevel = () => {
 
       if (collectedGemIndex !== -1) {
         audioManager.play(SOUND_NAMES.GEM);
-        
+
         setCurrentLevelId((currentLevelId.current + 1) % DEMO_LEVEL_COUNT);
         await fetchCurrentLevel();
         return;
@@ -111,7 +113,7 @@ export const DemoLevel = () => {
 
   const execCommands = async () => {
     if (!levelResult.current?.commands) return;
-    
+
     const { commands } = levelResult.current;
 
     setIsActuallyRunning(true);
@@ -133,9 +135,12 @@ export const DemoLevel = () => {
     resetData();
 
     try {
-      const { data } = await axios.post(`/demo/level/${currentLevelId.current}/run`, {
-        code: code.current,
-      });
+      const { data } = await axios.post(
+        `/demo/level/${currentLevelId.current}/run`,
+        {
+          code: code.current,
+        },
+      );
 
       setLevelResult(data);
       await execCommands();
@@ -156,7 +161,7 @@ export const DemoLevel = () => {
     if (isActuallyRunning.current) return;
     const newCommand = `hero.move_${direction}()`;
     const currentCode = code.current;
-    
+
     changeCode(currentCode + '\n' + newCommand);
   };
 
@@ -164,34 +169,43 @@ export const DemoLevel = () => {
     return (
       <DemoLevelWrapper style={{ opacity: 0.7 }}>
         <DemoMapContainer>
-          <div style={{
-            display: 'grid',
-            width: '200px',
-            height: '200px',
-            gridTemplateColumns: 'repeat(4, 50px)',
-            gridTemplateRows: 'repeat(4, 50px)',
-            gap: 0
-          }}>
-            {Array(16).fill(null).map((_, index) => (
-              <div key={index} style={{
-                width: '50px',
-                height: '50px',
-                background: 'rgba(255, 255, 255, 0.1)',
-                border: '1px solid rgba(255, 255, 255, 0.05)',
-                animation: 'pulse 1.5s ease-in-out infinite alternate'
-              }} />
-            ))}
+          <div
+            style={{
+              display: 'grid',
+              width: '200px',
+              height: '200px',
+              gridTemplateColumns: 'repeat(4, 50px)',
+              gridTemplateRows: 'repeat(4, 50px)',
+              gap: 0,
+            }}
+          >
+            {Array(16)
+              .fill(null)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    background: 'rgba(255, 255, 255, 0.1)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    animation: 'pulse 1.5s ease-in-out infinite alternate',
+                  }}
+                />
+              ))}
           </div>
         </DemoMapContainer>
-        <DemoEditorContainer style={{ minWidth: '250px' }}>
-        </DemoEditorContainer>
+        <DemoEditorContainer
+          style={{ minWidth: '250px' }}
+        ></DemoEditorContainer>
       </DemoLevelWrapper>
     );
   }
 
   const { hero } = levelData.current;
   const { hero: initialHero, gems } = initialLevelData.current;
-  const executingLine = levelResult.current?.commands[executingCommand.current]?.start.line;
+  const executingLine =
+    levelResult.current?.commands[executingCommand.current]?.start.line;
 
   return (
     <DemoLevelWrapper>
@@ -244,4 +258,4 @@ export const DemoLevel = () => {
       </DemoEditorContainer>
     </DemoLevelWrapper>
   );
-}; 
+};

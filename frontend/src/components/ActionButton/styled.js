@@ -6,7 +6,7 @@ export const IconWrapper = styled.span`
   margin-right: 8px;
   width: 18px;
   height: 18px;
-  
+
   svg {
     width: 100%;
     height: 100%;
@@ -39,24 +39,28 @@ export const StyledButton = styled.button`
     padding: 6px 12px;
   }
 
-  ${({ variant }) => variant === 'secondary' && css`
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  ${({ variant }) =>
+    variant === 'secondary' &&
+    css`
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.3);
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-  `}
+      &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: rgba(255, 255, 255, 0.4);
+      }
+    `}
 
-  ${({ size }) => size === 'large' && css`
-    font-size: 20px;
-    padding: 12px 24px;
-    font-weight: 600;
+  ${({ size }) =>
+    size === 'large' &&
+    css`
+      font-size: 20px;
+      padding: 12px 24px;
+      font-weight: 600;
 
-    @media (max-width: 768px) {
-      font-size: 18px;
-      padding: 8px 16px;
-    }
-  `}
-`; 
+      @media (max-width: 768px) {
+        font-size: 18px;
+        padding: 8px 16px;
+      }
+    `}
+`;

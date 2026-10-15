@@ -36,4 +36,4 @@ export const LoadingState = ({ message = 'Загрузка...' }) => (
     <Spinner aria-hidden="true" />
     <LoadingText>{message}</LoadingText>
   </LoadingContainer>
-); 
+);

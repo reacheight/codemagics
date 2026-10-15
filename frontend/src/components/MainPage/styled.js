@@ -86,7 +86,7 @@ export const ModuleCard = styled.div`
 
 export const ModulePreview = styled.div`
   position: relative;
-  
+
   img {
     width: 100%;
     height: 200px;
@@ -158,7 +158,7 @@ export const ModuleProgress = styled.div`
 
 export const ProgressText = styled.div`
   font-size: 14px;
-  color: #5C7185;
+  color: #5c7185;
   margin-bottom: 8px;
   font-weight: 500;
 
@@ -175,13 +175,13 @@ export const ProgressText = styled.div`
 export const ProgressBar = styled.div`
   width: 100%;
   height: 6px;
-  background: #E8F4FD;
+  background: #e8f4fd;
   border-radius: 3px;
   overflow: hidden;
 
   div {
     height: 100%;
-    background: linear-gradient(90deg, #1976D2, #42A5F5);
+    background: linear-gradient(90deg, #1976d2, #42a5f5);
     border-radius: 3px;
     transition: width 0.3s ease;
   }
@@ -191,9 +191,9 @@ export const ExpandButton = styled.button`
   width: 100%;
   padding: 12px;
   margin-top: 16px;
-  background: ${({ expanded }) => expanded ? '#1976D2' : 'transparent'};
-  color: ${({ expanded }) => expanded ? 'white' : '#1976D2'};
-  border: 2px solid #1976D2;
+  background: ${({ expanded }) => (expanded ? '#1976D2' : 'transparent')};
+  color: ${({ expanded }) => (expanded ? 'white' : '#1976D2')};
+  border: 2px solid #1976d2;
   border-radius: 8px;
   font-weight: 600;
   font-size: 14px;
@@ -202,7 +202,7 @@ export const ExpandButton = styled.button`
   font-family: 'Inter', sans-serif;
 
   &:hover {
-    background: #1976D2;
+    background: #1976d2;
     color: white;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
@@ -243,7 +243,7 @@ export const Map = styled.div`
   background: url(${newMap}) no-repeat center;
   background-size: cover;
   border-radius: 16px;
-  
+
   ${({ width, height }) => css`
     width: ${width};
     height: ${height};
@@ -294,12 +294,14 @@ export const Level = styled.button`
       opacity: 0.5;
     `};
 
-  ${({ current }) => !current && css`
-    &:hover {
-      filter: brightness(1.1);
-      transform: scale(1.1);
-    }
-  `}
+  ${({ current }) =>
+    !current &&
+    css`
+      &:hover {
+        filter: brightness(1.1);
+        transform: scale(1.1);
+      }
+    `}
 
   ${({ bottomPercent, leftPercent, current }) => css`
     bottom: ${bottomPercent + (current ? 0 : 0)}%;
@@ -314,7 +316,7 @@ export const ModuleTitle = styled.h2`
   font-size: 22px;
   font-weight: 600;
   margin: 0 0 8px 0;
-  color: #1A1A1A;
+  color: #1a1a1a;
 
   @media (max-width: 1200px) {
     font-size: 20px;
@@ -328,7 +330,7 @@ export const ModuleTitle = styled.h2`
 
 export const LevelCount = styled.div`
   font-family: 'Inter', sans-serif;
-  color: #5C7185;
+  color: #5c7185;
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 18px;
@@ -346,7 +348,7 @@ export const LevelCount = styled.div`
 
 export const Description = styled.p`
   font-family: 'Inter', sans-serif;
-  color: #5C7185;
+  color: #5c7185;
   font-size: 14px;
   line-height: 1.5;
   margin: 0 0 16px 0;
@@ -380,7 +382,7 @@ export const Tags = styled.div`
 export const Tag = styled.span`
   font-family: 'Inter', sans-serif;
   background: rgba(25, 118, 210, 0.08);
-  color: #1976D2;
+  color: #1976d2;
   padding: 6px 12px;
   border-radius: 8px;
   font-size: 12px;
@@ -402,7 +404,7 @@ export const Tag = styled.span`
     font-size: 10px;
 
     /* Show only first 3 tags on mobile */
-    &:nth-child(n+4):not(.mobile-more-tags) {
+    &:nth-child(n + 4):not(.mobile-more-tags) {
       display: none;
     }
 

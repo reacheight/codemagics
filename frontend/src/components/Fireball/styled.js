@@ -64,19 +64,21 @@ export const FireballProjectile = styled.div`
   pointer-events: none;
 
   /* Многослойный огненный эффект */
-  background: 
-    radial-gradient(circle at 30% 30%, 
-      rgba(255, 255, 255, 0.9) 0%, 
-      rgba(255, 235, 59, 0.8) 15%, 
-      rgba(255, 193, 7, 0.7) 30%, 
-      rgba(255, 152, 0, 0.6) 50%, 
-      rgba(255, 87, 34, 0.5) 70%, 
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 235, 59, 0.8) 15%,
+      rgba(255, 193, 7, 0.7) 30%,
+      rgba(255, 152, 0, 0.6) 50%,
+      rgba(255, 87, 34, 0.5) 70%,
       rgba(183, 28, 28, 0.3) 100%
     ),
-    radial-gradient(circle at 60% 70%, 
-      transparent 0%, 
-      rgba(255, 152, 0, 0.4) 30%, 
-      rgba(244, 67, 54, 0.6) 60%, 
+    radial-gradient(
+      circle at 60% 70%,
+      transparent 0%,
+      rgba(255, 152, 0, 0.4) 30%,
+      rgba(244, 67, 54, 0.6) 60%,
       rgba(183, 28, 28, 0.8) 100%
     );
 
@@ -99,11 +101,11 @@ export const FireballProjectile = styled.div`
     const deltaX = (endX - startX) * GAME_CONFIG.CELL_SIZE;
     const deltaY = (endY - startY) * GAME_CONFIG.CELL_SIZE;
     const duration = GAME_CONFIG.FIREBALL_ONE_CELL_DELAY * (range ?? 0);
-    
+
     return css`
       --deltaX: ${deltaX}px;
       --deltaY: ${deltaY}px;
-      animation: 
+      animation:
         ${coreFlicker} 0.15s infinite,
         ${glowPulse} 0.3s infinite,
         ${fireballFlight} ${duration}ms linear forwards;
@@ -119,10 +121,11 @@ export const FireballProjectile = styled.div`
     width: 60%;
     height: 60%;
     border-radius: 50%;
-    background: radial-gradient(circle, 
-      rgba(255, 255, 255, 1) 0%, 
-      rgba(255, 235, 59, 0.9) 30%, 
-      rgba(255, 193, 7, 0.6) 70%, 
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 235, 59, 0.9) 30%,
+      rgba(255, 193, 7, 0.6) 70%,
       transparent 100%
     );
     animation: ${coreFlicker} 0.1s infinite reverse;
@@ -137,9 +140,10 @@ export const FireballProjectile = styled.div`
     width: 30%;
     height: 30%;
     border-radius: 50%;
-    background: radial-gradient(circle, 
-      rgba(255, 255, 255, 1) 0%, 
-      rgba(255, 255, 255, 0.8) 50%, 
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0.8) 50%,
       transparent 100%
     );
     animation: ${coreFlicker} 0.08s infinite;

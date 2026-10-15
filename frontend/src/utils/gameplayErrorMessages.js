@@ -3,68 +3,73 @@ import GameplayErrorTypes from './GameplayErrorTypes';
 // Centralized mapping of error types to hero messages
 export const GAMEPLAY_ERROR_MESSAGES = {
   [GameplayErrorTypes.HERO_RAN_IN_WALL]: {
-    value: 'Ой, здесь я не могу пройти'
+    value: 'Ой, здесь я не могу пройти',
   },
-  
+
   [GameplayErrorTypes.HERO_KILLED_BY_ENEMY]: {
-    value: 'С этим рыцарем надо быть аккуратнее..'
+    value: 'С этим рыцарем надо быть аккуратнее..',
   },
 
   [GameplayErrorTypes.HERO_ENTERED_WIZARD_ZONE]: {
-    value: 'Злой волшебник заколдовал эту территорию!'
+    value: 'Злой волшебник заколдовал эту территорию!',
   },
 
   [GameplayErrorTypes.NO_FIREBALLS]: {
-    value: 'У меня не осталось сил для огненных шаров!'
+    value: 'У меня не осталось сил для огненных шаров!',
   },
 
   [GameplayErrorTypes.HERO_RAN_IN_ENEMY]: {
-    value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьет'
+    value: 'Я не могу туда идти,\nэтот злой рыцарь меня побьет',
   },
-  
+
   [GameplayErrorTypes.NO_ENEMIES_TO_ATTACK]: {
-    value: 'На этом уровне нет врагов,\nмне некого атаковать'
+    value: 'На этом уровне нет врагов,\nмне некого атаковать',
   },
-  
+
   [GameplayErrorTypes.NO_ENEMY_WITH_GIVEN_NAME]: {
-    getValue: (error) => `На этом уровне\nнет врага по имени «${error.name}»,\nмне некого атаковать`
+    getValue: (error) =>
+      `На этом уровне\nнет врага по имени «${error.name}»,\nмне некого атаковать`,
   },
-  
+
   [GameplayErrorTypes.ENEMY_TOO_FAR]: {
-    getValue: (error) => `Я не могу атаковать «${error.name}»,\nпотому что он слишком далеко`
+    getValue: (error) =>
+      `Я не могу атаковать «${error.name}»,\nпотому что он слишком далеко`,
   },
-  
+
   [GameplayErrorTypes.ENEMY_IS_BIG]: {
-    getValue: (error) => `Я не могу атаковать «${error.name}» — он слишком сильный`
+    getValue: (error) =>
+      `Я не могу атаковать «${error.name}» — он слишком сильный`,
   },
-  
+
   [GameplayErrorTypes.NO_LEVERS]: {
-    value: 'На этом уровне нет рычагов,\nмне нечего переключать'
+    value: 'На этом уровне нет рычагов,\nмне нечего переключать',
   },
-  
+
   [GameplayErrorTypes.NO_LEVER_WITH_GIVEN_NAME]: {
-    getValue: (error) => `На этом уровне нет рычага с названием «${error.name}»`
+    getValue: (error) =>
+      `На этом уровне нет рычага с названием «${error.name}»`,
   },
-  
+
   [GameplayErrorTypes.LEVER_TOO_FAR]: {
-    getValue: (error) => `Рычаг с названием «${error.name}» слишком далеко,\nя не могу переключить его отсюда`,
-    delay: 3000
+    getValue: (error) =>
+      `Рычаг с названием «${error.name}» слишком далеко,\nя не могу переключить его отсюда`,
+    delay: 3000,
   },
-  
+
   [GameplayErrorTypes.CANT_BE_HERE]: {
     value: 'Зачем мне сюда? Здесь нет алмаза',
-    delay: 3000
+    delay: 3000,
   },
-  
+
   [GameplayErrorTypes.ENEMY_SHOULD_NOT_BE_HERE]: {
     value: 'Огромный рыцарь перешёл на наш берег, нам конец!',
-    delay: 3000
+    delay: 3000,
   },
-  
+
   [GameplayErrorTypes.INFINITE_LOOP]: {
     value: 'Ой, кажется, я застрял в бесконечном цикле!',
-    delay: 3000
-  }
+    delay: 3000,
+  },
 };
 
 /**
@@ -82,7 +87,7 @@ export const getHeroTextForError = (gameplayError) => {
     return [];
   }
 
-  const value = errorConfig.getValue 
+  const value = errorConfig.getValue
     ? errorConfig.getValue(gameplayError)
     : errorConfig.value;
 

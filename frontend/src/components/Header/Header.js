@@ -1,26 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HeaderContent, Logo } from './styled';
-import { MiniProfile } from '../MiniProfile/MiniProfile';
 import { Link } from 'react-router-dom';
-import { useUser } from '../../contexts/UserContext';
 import { ActionButton } from '../ActionButton/ActionButton';
 
-export const Header = ({ rightButtonText, onRightButtonClick,  isTransparent }) => {
-  const { user, logout } = useUser();
+export const Header = ({ isTransparent, isLanding }) => {
+  const navigate = useNavigate();
 
   return (
     <HeaderContent isTransparent={isTransparent}>
-      <Link to={user ? '/game' : '/'}>
+      <Link to={'/'}>
         <Logo src={'/logo.webp'} alt="App Logo" isTransparent={isTransparent} />
       </Link>
-      {!!user && (
-        <MiniProfile user={user} onLogout={logout} />
-      )}
-      {!user && (
-        <ActionButton onClick={onRightButtonClick}>
-          {rightButtonText}
+      {isLanding && (
+        <ActionButton onClick={() => navigate('/game')}>
+          Начать программировать
         </ActionButton>
       )}
     </HeaderContent>
   );
-}
+};

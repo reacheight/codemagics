@@ -93,19 +93,19 @@ export const DemoCodeEditor = ({
   const options = [
     snippetCompletion('hero.move_right()', {
       label: 'hero.move_right()',
-      detail: 'шаг вправо'
+      detail: 'шаг вправо',
     }),
     snippetCompletion('hero.move_left()', {
       label: 'hero.move_left()',
-      detail: 'шаг влево'
+      detail: 'шаг влево',
     }),
     snippetCompletion('hero.move_up()', {
       label: 'hero.move_up()',
-      detail: 'шаг вверх'
+      detail: 'шаг вверх',
     }),
     snippetCompletion('hero.move_down()', {
       label: 'hero.move_down()',
-      detail: 'шаг вниз'
+      detail: 'шаг вниз',
     }),
   ];
 
@@ -114,7 +114,7 @@ export const DemoCodeEditor = ({
     autocompletion({
       override: [getCompletions(options)],
     }),
-    indentUnit.of("    "),
+    indentUnit.of('    '),
   ];
 
   return (
@@ -139,4 +139,4 @@ export const DemoCodeEditor = ({
       )}
     </EditorWrapper>
   );
-}; 
+};

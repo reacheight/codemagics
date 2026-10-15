@@ -13,7 +13,13 @@ import { CommandDescription } from '../CommandDescription/CommandDescription';
 
 const formatCode = (code) => code.replace(/\(\w+\)/, '()');
 
-export const AvailableCommands = ({ isOpen, newCommands = [], prevCommands = [], onAdd, onToggle }) => {
+export const AvailableCommands = ({
+  isOpen,
+  newCommands = [],
+  prevCommands = [],
+  onAdd,
+  onToggle,
+}) => {
   const [command, setCommand] = useState(null);
 
   const renderCommand = (command, isNew = false) => (

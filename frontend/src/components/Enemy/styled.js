@@ -7,19 +7,19 @@ const ENEMY_SIZES = {
   knight: {
     width: 57,
     height: 90,
-    rightOffset: { right: 7, left: -2 }
+    rightOffset: { right: 7, left: -2 },
   },
   wizard: {
     width: 85,
     height: 100,
-    rightOffset: { right: 18, left: 15 }
-  }
+    rightOffset: { right: 18, left: 15 },
+  },
 };
 
 // Константы для позиционирования имени
 const NAME_OFFSETS = {
   knight: { hidden: 45, normal: 70, big: 115 },
-  wizard: { hidden: 55, normal: 80, big: 125 }
+  wizard: { hidden: 55, normal: 80, big: 125 },
 };
 
 const rightFallAnimation = keyframes`
@@ -154,23 +154,20 @@ const knightWarrianceLeftAnimation = keyframes`
   }
 `;
 
-
-
 export const Wrapper = styled.div`
   width: ${({ enemyType }) => ENEMY_SIZES[enemyType].width}px;
   height: 114px;
   position: relative;
   text-align: center;
-  z-index: ${({ x }) => (x)};
+  z-index: ${({ x }) => x};
   transform: scale(${({ isBig }) => (isBig ? 2 : 1)});
   transition: ${({ spedUp }) => css`
     right ${spedUp ? 100 : 150}ms linear, 
     bottom ${spedUp ? 100 : 150}ms linear;
   `}
-
-  ${({ shift, isBig, nameHidden, enemyType }) => {
+    ${({ shift, isBig, nameHidden, enemyType }) => {
     const offsets = NAME_OFFSETS[enemyType];
-    
+
     let baseOffset;
     if (nameHidden) {
       baseOffset = offsets.hidden;
@@ -179,20 +176,18 @@ export const Wrapper = styled.div`
     } else {
       baseOffset = offsets.normal;
     }
-    
+
     return css`
       bottom: ${baseOffset + shift.bottom}px;
       right: ${shift.right}px;
     `;
   }}
-
-  ${({ x, y }) => css`
+    ${({ x, y }) => css`
     grid-row-start: ${x + 1};
     grid-row-end: ${x + 2};
     grid-column-start: ${y + 1};
     grid-column-end: ${y + 2};
   `};
-
 `;
 
 export const Name = styled.span`
@@ -215,7 +210,8 @@ export const Name = styled.span`
 
 export const Image = styled.div`
   height: ${({ enemyType }) => ENEMY_SIZES[enemyType].height}px;
-  background: url(${({ enemyType }) => (enemyType === 'wizard' ? wizard : enemy)}) no-repeat center;
+  background: url(${({ enemyType }) => (enemyType === 'wizard' ? wizard : enemy)})
+    no-repeat center;
   position: relative;
   right: ${({ direction, enemyType }) => {
     const offset = direction === 'right' ? 'right' : 'left';
@@ -226,50 +222,57 @@ export const Image = styled.div`
 
   // Комбинированная анимация для рыцарей: красное свечение + готовность к бою
   ${({ enemyType, alive, direction }) =>
-    enemyType === 'knight' && alive &&
+    enemyType === 'knight' &&
+    alive &&
     css`
-      animation: 
+      animation:
         ${knightRedGlowAnimation} 3s ease-in-out infinite,
-        ${direction === 'right' ? knightWarrianceRightAnimation : knightWarrianceLeftAnimation} 4.5s ease-in-out infinite;
+        ${direction === 'right' ? knightWarrianceRightAnimation : knightWarrianceLeftAnimation}
+          4.5s ease-in-out infinite;
     `}
 
   // Для мёртвых рыцарей - стандартный transform
   ${({ enemyType, alive, direction }) =>
-    enemyType === 'knight' && !alive &&
+    enemyType === 'knight' &&
+    !alive &&
     css`
       transform: scaleX(${direction === 'right' ? 1 : -1});
     `}
 
   // Для других врагов - стандартный transform
   ${({ enemyType, direction }) =>
-    enemyType !== 'wizard' && enemyType !== 'knight' &&
+    enemyType !== 'wizard' &&
+    enemyType !== 'knight' &&
     css`
       transform: scaleX(${direction === 'right' ? 1 : -1});
     `}
 
   // Комбинированная анимация для волшебников: свечение + колдовство
   ${({ enemyType, alive, direction }) =>
-    enemyType === 'wizard' && alive &&
+    enemyType === 'wizard' &&
+    alive &&
     css`
-      animation: 
+      animation:
         ${wizardGlowAnimation} 3s ease-in-out infinite,
-        ${direction === 'right' ? wizardSpellcastingRightAnimation : wizardSpellcastingLeftAnimation} 4s ease-in-out infinite;
+        ${direction === 'right' ? wizardSpellcastingRightAnimation : wizardSpellcastingLeftAnimation}
+          4s ease-in-out infinite;
     `}
 
   // Для мёртвых волшебников - стандартный transform
   ${({ enemyType, alive, direction }) =>
-    enemyType === 'wizard' && !alive &&
+    enemyType === 'wizard' &&
+    !alive &&
     css`
       transform: scaleX(${direction === 'right' ? 1 : -1});
     `}
 
    ${({ alive, direction, spedUp }) => {
-    if (!alive)
-      return css`
-        animation:
-          ${direction === 'right' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out
-            forwards,
-          ${fadeAnimation} 2s ease-out forwards;
-      `;
+     if (!alive)
+       return css`
+         animation:
+           ${direction === 'right' ? leftFallAnimation : rightFallAnimation}
+             ${spedUp ? 500 : 1000}ms ease-out forwards,
+           ${fadeAnimation} 2s ease-out forwards;
+       `;
    }}
 `;

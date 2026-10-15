@@ -1,7 +1,5 @@
 import React, { lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../contexts/UserContext';
-import { LoginModal } from '../LoginModal/LoginModal';
 import { Layout } from '../Layout/Layout';
 import { ActionButton } from '../ActionButton/ActionButton';
 import codemagicsVideo from '../../assets/codemagics.webm';
@@ -68,20 +66,23 @@ import {
 import { Button } from '../Button/Button';
 
 const DemoLevel = lazy(() =>
-  import('../DemoLevel/DemoLevel').then((module) => ({ default: module.DemoLevel }))
+  import('../DemoLevel/DemoLevel').then((module) => ({
+    default: module.DemoLevel,
+  })),
 );
 
 const LandingPageDemoSkeleton = () => (
   <DemoLevelSkeletonWrapper>
     <SkeletonMapContainer>
       <SkeletonGameField>
-        {Array(16).fill(null).map((_, index) => (
-          <SkeletonCell key={index} />
-        ))}
+        {Array(16)
+          .fill(null)
+          .map((_, index) => (
+            <SkeletonCell key={index} />
+          ))}
       </SkeletonGameField>
     </SkeletonMapContainer>
-    <SkeletonEditorContainer>
-    </SkeletonEditorContainer>
+    <SkeletonEditorContainer></SkeletonEditorContainer>
   </DemoLevelSkeletonWrapper>
 );
 
@@ -89,14 +90,14 @@ const TelegramPost = () => (
   <TelegramPostContainer>
     <TelegramPostWidget>
       <TelegramPostHeader>
-        <TelegramChannelInfo onClick={() => window.open('https://t.me/codemagics', '_blank')}>
+        <TelegramChannelInfo
+          onClick={() => window.open('https://t.me/codemagics', '_blank')}
+        >
           <TelegramAvatar>
             <img src={tgLogo} alt="Telegram Logo" />
           </TelegramAvatar>
           <TelegramChannelDetails>
-            <TelegramChannelName>
-              CodeMagics
-            </TelegramChannelName>
+            <TelegramChannelName>CodeMagics</TelegramChannelName>
             <TelegramChannelHandle>@codemagics</TelegramChannelHandle>
           </TelegramChannelDetails>
         </TelegramChannelInfo>
@@ -107,16 +108,22 @@ const TelegramPost = () => (
         </TelegramPostImage>
         <TelegramPostTextContent>
           <TelegramPostTitle>
-            <strong>ChatGPT</strong> vs первый уровень <strong>CodeMagics</strong>
+            <strong>ChatGPT</strong> vs первый уровень{' '}
+            <strong>CodeMagics</strong>
           </TelegramPostTitle>
           <TelegramPostText>
-            Мы попросили последнюю модель от OpenAI — GPT-5 — пройти первый первый уровень нашего первого модуля. Результаты шокировали...
+            Мы попросили последнюю модель от OpenAI — GPT-5 — пройти первый
+            первый уровень нашего первого модуля. Результаты шокировали...
           </TelegramPostText>
         </TelegramPostTextContent>
       </TelegramPostContent>
       <TelegramPostFooter>
         <TelegramPostTime>2 дня назад</TelegramPostTime>
-        <TelegramChannelLink href="https://t.me/codemagics/14" target="_blank" rel="noopener noreferrer">
+        <TelegramChannelLink
+          href="https://t.me/codemagics/14"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Читать в Telegram
         </TelegramChannelLink>
       </TelegramPostFooter>
@@ -126,16 +133,9 @@ const TelegramPost = () => (
 
 export const LandingPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useUser();
-  const [showLoginModal, setShowLoginModal] = React.useState(false);
   const [selectedModule, setSelectedModule] = React.useState(1);
 
   const handleContinuePlaying = () => {
-    navigate('/game');
-  };
-
-  const handleLoginSuccess = () => {
-    setShowLoginModal(false);
     navigate('/game');
   };
 
@@ -154,7 +154,7 @@ export const LandingPage = () => {
         'Комментарии',
         'Переменные',
         'Циклы while',
-        'if-выражения'
+        'if-выражения',
       ],
       isReady: true,
     },
@@ -178,25 +178,21 @@ export const LandingPage = () => {
       title: 'Модуль 3',
       subtitle: 'Расширяем знания',
       levelsCountSpan: '30 уровней',
-      topics: [
-        'Функции',
-        'Списки',
-        'Кортежи',
-        'Словари',
-        'Рекурсия',
-      ],
+      topics: ['Функции', 'Списки', 'Кортежи', 'Словари', 'Рекурсия'],
       isReady: false,
-    }
+    },
   ];
 
-  const selectedModuleData = modules.find(module => module.id === selectedModule);
+  const selectedModuleData = modules.find(
+    (module) => module.id === selectedModule,
+  );
 
   return (
-    <Layout isHeaderTransparent showAutoLogin={false}>
+    <Layout isHeaderTransparent>
       <LandingContainer>
         <HeroContainer>
           <CloudsContainer>
-            <CloudImage 
+            <CloudImage
               src={cloudImage}
               alt="облако"
               size={250}
@@ -207,7 +203,7 @@ export const LandingPage = () => {
               duration={12}
               delay="0s"
             />
-            <CloudImage 
+            <CloudImage
               src={cloudImage}
               alt="облако"
               size={350}
@@ -218,7 +214,7 @@ export const LandingPage = () => {
               duration={14}
               delay="4s"
             />
-            <CloudImage 
+            <CloudImage
               src={cloudImage}
               alt="облако"
               size={500}
@@ -232,14 +228,25 @@ export const LandingPage = () => {
           </CloudsContainer>
           <HeroSection>
             <LeftColumn>
-              <ActionButton onClick={() => window.open('https://t.me/codemagics', '_blank')} variant="secondary" icon={<TelegramIcon />}>Наш Telegram канал</ActionButton>
-              <Title>Увлекательная игра для обучения детей программированию</Title>
-              <Subtitle>Прямо в браузере — не нужно ничего устанавливать. Обучение с нуля, подходит для детей от 10 лет.</Subtitle>
+              <ActionButton
+                onClick={() => window.open('https://t.me/codemagics', '_blank')}
+                variant="secondary"
+                icon={<TelegramIcon />}
+              >
+                Наш Telegram канал
+              </ActionButton>
+              <Title>
+                Увлекательная игра для обучения детей программированию
+              </Title>
+              <Subtitle>
+                Прямо в браузере — не нужно ничего устанавливать. Обучение с
+                нуля, подходит для детей от 10 лет.
+              </Subtitle>
               <Button
                 disabled={false}
                 shadowColor="#1B4B82"
                 frontColor="#2D7CD4"
-                alt={isAuthenticated ? 'Продолжить обучение' : 'Попробовать бесплатно'}
+                alt={'Попробовать бесплатно'}
                 onClick={handleContinuePlaying}
                 width={300}
                 height={50}
@@ -260,16 +267,17 @@ export const LandingPage = () => {
             <FeatureContent>
               <FeatureTitle>Обучение — в&nbsp;игровом формате</FeatureTitle>
               <FeatureDescription>
-                Ребёнок пишет код, чтобы управлять персонажем, решать головоломки и собирать награды —
-                учебный процесс превращается в захватывающую игру.
+                Ребёнок пишет код, чтобы управлять персонажем, решать
+                головоломки и собирать награды — учебный процесс превращается в
+                захватывающую игру.
               </FeatureDescription>
             </FeatureContent>
             <FeatureVideo>
-              <video 
-                src={codemagicsVideo} 
+              <video
+                src={codemagicsVideo}
                 alt="интерфейс игры для изучения программирования для детей"
-                autoPlay 
-                loop 
+                autoPlay
+                loop
                 muted
                 playsInline
               />
@@ -280,13 +288,19 @@ export const LandingPage = () => {
 
           <FeatureSection>
             <FeatureContent>
-              <FeatureTitle>Идеально для первых шагов в программировании</FeatureTitle>
+              <FeatureTitle>
+                Идеально для первых шагов в программировании
+              </FeatureTitle>
               <FeatureDescription>
-              Каждый уровень начинается с необходимой теории — мы объясняем новые концепции простым языком и на наглядных примерах.
+                Каждый уровень начинается с необходимой теории — мы объясняем
+                новые концепции простым языком и на наглядных примерах.
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
-              <img src={theoryImage} alt="пример теории темы для программирования для детей" />
+              <img
+                src={theoryImage}
+                alt="пример теории темы для программирования для детей"
+              />
             </FeatureImage>
           </FeatureSection>
 
@@ -294,7 +308,9 @@ export const LandingPage = () => {
             <FeatureContent>
               <FeatureTitle>Python — язык №1</FeatureTitle>
               <FeatureDescription>
-              Мы обучаем самому популярному языку программирования в мире. Питон используют в Яндексе и Google, на нём пишут сайты, игры и искусственный интеллект.
+                Мы обучаем самому популярному языку программирования в мире.
+                Питон используют в Яндексе и Google, на нём пишут сайты, игры и
+                искусственный интеллект.
               </FeatureDescription>
             </FeatureContent>
             <FeatureImage>
@@ -303,9 +319,7 @@ export const LandingPage = () => {
           </FeatureSection>
 
           <CurriculumContainer>
-            <FeatureTitle>
-              Программа обучения
-            </FeatureTitle>
+            <FeatureTitle>Программа обучения</FeatureTitle>
             <CurriculumSection>
               <ModulesList>
                 {modules.map((module) => (
@@ -341,15 +355,25 @@ export const LandingPage = () => {
                   <CurriculumRightSection>
                     {selectedModuleData?.isReady ? (
                       <>
-                        <LevelsCount>{selectedModuleData?.levelsCountSpan}</LevelsCount>
-                        <ActionButton onClick={handleContinuePlaying} size="large">
-                          {isAuthenticated ? 'Продолжить обучение' : 'Начать программировать'}
+                        <LevelsCount>
+                          {selectedModuleData?.levelsCountSpan}
+                        </LevelsCount>
+                        <ActionButton
+                          onClick={handleContinuePlaying}
+                          size="large"
+                        >
+                          Начать программировать
                         </ActionButton>
                       </>
                     ) : (
                       <>
                         <LevelsCount>В разработке</LevelsCount>
-                        <ActionButton onClick={() => window.open('https://t.me/codemagics', '_blank')} size="large">
+                        <ActionButton
+                          onClick={() =>
+                            window.open('https://t.me/codemagics', '_blank')
+                          }
+                          size="large"
+                        >
                           Следить в Telegram
                         </ActionButton>
                       </>
@@ -360,14 +384,7 @@ export const LandingPage = () => {
             </CurriculumSection>
           </CurriculumContainer>
         </FeaturesContainer>
-
-        {showLoginModal && (
-          <LoginModal 
-            onClose={() => setShowLoginModal(false)}
-            onSuccess={handleLoginSuccess}
-          />
-        )}
       </LandingContainer>
     </Layout>
   );
-}; 
+};

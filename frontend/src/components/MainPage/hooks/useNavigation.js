@@ -1,40 +1,20 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES, MODULE_CONFIG } from '../constants';
+import { ROUTES } from '../constants';
 
-export const useNavigation = (isAuthenticated) => {
+export const useNavigation = () => {
   const navigate = useNavigate();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [pendingNavigation, setPendingNavigation] = useState('');
 
-  const handleLevelClick = useCallback((level) => {
-    const levelPath = ROUTES.getLevelPath(level);
-    
-    if (isAuthenticated || level <= MODULE_CONFIG.freeLevels) {
+  const handleLevelClick = useCallback(
+    (level) => {
+      const levelPath = ROUTES.getLevelPath(level);
+
       navigate(levelPath);
-    } else {
-      setPendingNavigation(levelPath);
-      setShowLoginModal(true);
-    }
-  }, [isAuthenticated, navigate]);
-
-  const handleModalClose = useCallback(() => {
-    setShowLoginModal(false);
-    setPendingNavigation('');
-  }, []);
-
-  const handleLoginSuccess = useCallback(() => {
-    setShowLoginModal(false);
-    if (pendingNavigation) {
-      navigate(pendingNavigation);
-      setPendingNavigation('');
-    }
-  }, [navigate, pendingNavigation]);
+    },
+    [navigate],
+  );
 
   return {
-    showLoginModal,
     handleLevelClick,
-    handleModalClose,
-    handleLoginSuccess
   };
-}; 
+};

@@ -67,11 +67,10 @@ export const CollapseContent = styled.div`
   overflow-y: auto;
   transition: 0.3s ease-in-out;
 
-  ${({ isOpen }) =>
-    css`
-      padding-top: ${isOpen ? 10 : 0}px;
-      max-height: ${isOpen ? 200 : 0}px;
-    `}
+  ${({ isOpen }) => css`
+    padding-top: ${isOpen ? 10 : 0}px;
+    max-height: ${isOpen ? 200 : 0}px;
+  `}
 `;
 
 export const GoalsBlock = styled.div`
@@ -82,7 +81,7 @@ export const GoalsBlock = styled.div`
   box-shadow:
     0px 2px 0px 0px #504d4980,
     0px 2px 3px 0px #595959 inset;
-`
+`;
 
 export const GoalsBlockTitle = styled.div`
   font-family: 'Nunito', sans-serif;
@@ -90,14 +89,14 @@ export const GoalsBlockTitle = styled.div`
   font-size: 16px;
   line-height: 35px;
   color: #fff;
-`
+`;
 
 export const GoalsList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
   padding: 0 8px;
-`
+`;
 
 export const Goal = styled.div`
   display: flex;
@@ -106,7 +105,7 @@ export const Goal = styled.div`
   ${({ notCompleted }) =>
     notCompleted &&
     css`
-      color:rgb(255, 100, 100);
+      color: rgb(255, 100, 100);
       font-weight: 400;
     `}
 
@@ -114,4 +113,4 @@ export const Goal = styled.div`
     width: 20px;
     margin-left: 5px;
   }
-`
+`;

@@ -25,7 +25,8 @@ export const ButtonFront = styled.div`
   border-bottom: 3px solid rgba(255, 255, 255, 0.3);
   background: ${({ color }) => color};
   transition: all 0.15s ease-out;
-  box-shadow: 0 ${({ shadowHeight }) => shadowHeight}px ${({ shadowColor }) => shadowColor};
+  box-shadow: 0 ${({ shadowHeight }) => shadowHeight}px
+    ${({ shadowColor }) => shadowColor};
 
   ${({ disabled, shadowHeight }) =>
     !disabled &&
@@ -37,7 +38,8 @@ export const ButtonFront = styled.div`
       }
       &:active {
         filter: brightness(0.95);
-        box-shadow: 0 ${Math.max(0, shadowHeight - 4)}px ${({ shadowColor }) => shadowColor};
+        box-shadow: 0 ${Math.max(0, shadowHeight - 4)}px
+          ${({ shadowColor }) => shadowColor};
       }
     `}
 

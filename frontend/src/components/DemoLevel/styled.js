@@ -5,7 +5,7 @@ export const DemoLevelWrapper = styled.div`
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  background: linear-gradient(#99C979, #5F9F6E);
+  background: linear-gradient(#99c979, #5f9f6e);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

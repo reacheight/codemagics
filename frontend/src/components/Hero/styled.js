@@ -82,8 +82,9 @@ export const Wrapper = styled.div`
   ${({ isDead, shift, spedUp }) =>
     isDead &&
     css`
-      animation: 
-        ${shift?.direction === 'left' ? leftFallAnimation : rightFallAnimation} ${spedUp ? 500 : 1000}ms ease-out forwards,
+      animation:
+        ${shift?.direction === 'left' ? leftFallAnimation : rightFallAnimation}
+          ${spedUp ? 500 : 1000}ms ease-out forwards,
         ${deathAnimation} 2s ease-out forwards;
     `}
 `;

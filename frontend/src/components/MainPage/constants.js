@@ -1,7 +1,8 @@
 export const MODULE_CONFIG = {
   id: 1,
   title: 'Лесной путь',
-  description: 'Изучите основы программирования в увлекательном путешествии через лес',
+  description:
+    'Изучите основы программирования в увлекательном путешествии через лес',
   totalLevels: 23,
   freeLevels: 3,
   tags: [
@@ -13,18 +14,18 @@ export const MODULE_CONFIG = {
     'комментарии',
     'переменные',
     'циклы',
-    'if-выражения'
+    'if-выражения',
   ],
-  mobileHiddenTagsCount: 6
+  mobileHiddenTagsCount: 6,
 };
 
 export const MAP_CONFIG = {
   imageWidth: 1536,
   imageHeight: 889,
-  
+
   maxMapWidth: 1200,
   maxMapHeight: 700,
-  resizeDebounceMs: 150
+  resizeDebounceMs: 150,
 };
 
 export const LEVEL_POSITIONS = [
@@ -55,16 +56,15 @@ export const LEVEL_POSITIONS = [
 
 export const ROUTES = {
   levelPattern: '/forest/level/:level',
-  getLevelPath: (level) => `/forest/level/${level}`
+  getLevelPath: (level) => `/forest/level/${level}`,
 };
 
 export const UI_TEXT = {
-  loginTitle: 'Войдите, чтобы продолжить',
   moduleNumber: 'Модуль 1',
   statusCompleted: 'Завершен',
   statusInProgress: 'В процессе',
   levelsText: 'уровня',
   levelsCompleted: 'уровней завершено',
   moreTagsText: '+6 ещё',
-  altText: 'Лесной путь Preview'
-}; 
+  altText: 'Лесной путь Preview',
+};

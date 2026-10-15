@@ -1,4 +1,3 @@
-// Game configuration constants
 export const GAME_CONFIG = {
   // Movement and animation
   CELL_SIZE: 49,
@@ -20,7 +19,7 @@ export const GAME_CONFIG = {
       hasEnemyAround: 500,
       enemyWalk: 100,
       fireball: 250,
-    }
+    },
   },
   FIREBALL_ONE_CELL_DELAY: 120,
 
@@ -44,25 +43,25 @@ export const GAME_CONFIG = {
 
   // Grid cell types
   CELL_TYPES: {
-    LAWN: "L",
-    SAND: "S",
-    TREE: "T",
-    ROCK: "R",
-    WATER: "W",
+    LAWN: 'L',
+    SAND: 'S',
+    TREE: 'T',
+    ROCK: 'R',
+    WATER: 'W',
   },
 
   // Wall types (impassable cells)
-  WALL_TYPES: ["T", "R", "W"],
+  WALL_TYPES: ['T', 'R', 'W'],
 
   // Screen size breakpoints
   SCREEN: {
     MOBILE_HEIGHT: 720,
     SCALE_THRESHOLDS: {
-      LARGE_LEVEL: 90,    // width * height >= 90 -> scale 0.7
-      MEDIUM_LEVEL: 54,   // width * height >= 54 -> scale 0.9
-      SMALL_LEVEL: 45,    // width * height >= 45 or height >= 8 -> scale 1.0
-    }
-  }
+      LARGE_LEVEL: 90, // width * height >= 90 -> scale 0.7
+      MEDIUM_LEVEL: 54, // width * height >= 54 -> scale 0.9
+      SMALL_LEVEL: 45, // width * height >= 45 or height >= 8 -> scale 1.0
+    },
+  },
 };
 
 // Local storage keys
@@ -77,8 +76,10 @@ export const API_ENDPOINTS = {
   LEVEL: (gameId, levelId) => `/${gameId}/level/${levelId}`,
   LEVEL_RUN: (gameId, levelId) => `/${gameId}/level/${levelId}/run`,
   LEVEL_COMPLETE: (gameId, levelId) => `/${gameId}/level/${levelId}/complete`,
-  LEVEL_INSTRUCTIONS: (gameId, levelId) => `/${gameId}/level/${levelId}/instructions`,
-  STARTING_CODE: (gameId, levelId) => `/${gameId}/level/${levelId}/startingCode`,
+  LEVEL_INSTRUCTIONS: (gameId, levelId) =>
+    `/${gameId}/level/${levelId}/instructions`,
+  STARTING_CODE: (gameId, levelId) =>
+    `/${gameId}/level/${levelId}/startingCode`,
 };
 
 // Command names for game execution

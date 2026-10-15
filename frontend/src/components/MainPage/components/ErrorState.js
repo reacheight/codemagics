@@ -50,18 +50,14 @@ const RetryButton = styled.button`
   }
 `;
 
-export const ErrorState = ({ 
-  message = 'Произошла ошибка при загрузке данных', 
-  onRetry 
+export const ErrorState = ({
+  message = 'Произошла ошибка при загрузке данных',
+  onRetry,
 }) => (
   <ErrorContainer role="alert">
     <ErrorIcon aria-hidden="true">⚠️</ErrorIcon>
     <ErrorTitle>Ошибка</ErrorTitle>
     <ErrorMessage>{message}</ErrorMessage>
-    {onRetry && (
-      <RetryButton onClick={onRetry}>
-        Повторить попытку
-      </RetryButton>
-    )}
+    {onRetry && <RetryButton onClick={onRetry}>Повторить попытку</RetryButton>}
   </ErrorContainer>
-); 
+);

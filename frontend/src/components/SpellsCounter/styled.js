@@ -49,7 +49,7 @@ export const SpellIcon = styled.div`
 `;
 
 export const SpellText = styled.span`
-  color: ${({ isEmpty }) => isEmpty ? 'rgba(255, 255, 255, 0.4)' : 'white'};
+  color: ${({ isEmpty }) => (isEmpty ? 'rgba(255, 255, 255, 0.4)' : 'white')};
   font-weight: bold;
   font-size: 20px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);

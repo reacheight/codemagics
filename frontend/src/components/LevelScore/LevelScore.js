@@ -34,19 +34,41 @@ export const LevelScore = ({ isLastLevel, score, onContinue, onClose }) => {
         </Stars>
         <Block>
           <Title>Уровень пройден!</Title>
-          {score < 3 && <Achievement>Но чтобы заработать больше звезд, нужно выполнить все задания</Achievement>}
+          {score < 3 && (
+            <Achievement>
+              Но чтобы заработать больше звезд, нужно выполнить все задания
+            </Achievement>
+          )}
         </Block>
 
         <ButtonsWrapper>
-          <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
+          <Button
+            frontColor="#BD3A0F"
+            shadowColor="#8C2B0B"
+            onClick={openMenu}
+            height="50"
+            width="100"
+          >
             <span>Меню</span>
-          </Button> 
-          {!isLastLevel &&
-            <Button frontColor="#40BF4C" shadowColor="#1E9029" onClick={onContinue} height="50" width="100">
+          </Button>
+          {!isLastLevel && (
+            <Button
+              frontColor="#40BF4C"
+              shadowColor="#1E9029"
+              onClick={onContinue}
+              height="50"
+              width="100"
+            >
               <span>Дальше</span>
             </Button>
-          }
-          <Button frontColor="#D79D2C" shadowColor="#B47C11" onClick={onClose} height="50" width="100">
+          )}
+          <Button
+            frontColor="#D79D2C"
+            shadowColor="#B47C11"
+            onClick={onClose}
+            height="50"
+            width="100"
+          >
             <span>Заново</span>
           </Button>
         </ButtonsWrapper>

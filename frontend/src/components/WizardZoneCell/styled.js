@@ -32,26 +32,21 @@ export const WizardCell = styled.div`
   position: relative;
   pointer-events: none;
   border-radius: 2px;
-  
-  background: ${({ isWizardAlive }) => 
-    isWizardAlive 
+
+  background: ${({ isWizardAlive }) =>
+    isWizardAlive
       ? 'radial-gradient(circle, rgba(148, 0, 211, 0.6) 0%, rgba(138, 43, 226, 0.4) 70%, rgba(75, 0, 130, 0.2) 100%)'
-      : 'transparent'
-  };
-  
-  box-shadow: ${({ isWizardAlive }) => 
-    isWizardAlive 
+      : 'transparent'};
+
+  box-shadow: ${({ isWizardAlive }) =>
+    isWizardAlive
       ? 'inset 0 0 25px rgba(148, 0, 211, 0.5), 0 0 15px rgba(138, 43, 226, 0.4), 0 0 30px rgba(138, 43, 226, 0.2)'
-      : 'none'
-  };
-  
-  animation: ${({ isWizardAlive }) => 
-    isWizardAlive ? wizardPulse : wizardFadeOut
-  } ${({ isWizardAlive }) => 
-    isWizardAlive ? '2s' : '1.2s'
-  } ease-in-out ${({ isWizardAlive }) => 
-    isWizardAlive ? 'infinite' : 'forwards'
-  };
+      : 'none'};
+
+  animation: ${({ isWizardAlive }) =>
+    isWizardAlive ? wizardPulse : wizardFadeOut}
+    ${({ isWizardAlive }) => (isWizardAlive ? '2s' : '1.2s')} ease-in-out
+    ${({ isWizardAlive }) => (isWizardAlive ? 'infinite' : 'forwards')};
 
   ${({ x, y }) => css`
     z-index: -1;
@@ -61,4 +56,3 @@ export const WizardCell = styled.div`
     grid-column-end: ${y + 2};
   `}
 `;
-

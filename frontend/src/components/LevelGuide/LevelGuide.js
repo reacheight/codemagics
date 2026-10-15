@@ -109,18 +109,17 @@ export const LevelGuide = ({ level, data, onClose }) => {
 
         {instructions || example ? (
           <Block>
-            {instructions
-              ? <Instructions>
+            {instructions ? (
+              <Instructions>
                 {splitStringOutsideQuotes(instructions).map((text, i) => {
-                  if (text.includes("`")) {
+                  if (text.includes('`')) {
                     return <CodeTag key={i}>{text.replace(/`/g, '')}</CodeTag>;
                   } else {
-                    return <span key={i}>{text}</span>
+                    return <span key={i}>{text}</span>;
                   }
                 })}
               </Instructions>
-              : null
-            }
+            ) : null}
             {example ? (
               <CodeMirrorWrapper>
                 <CodeMirror
@@ -187,10 +186,22 @@ export const LevelGuide = ({ level, data, onClose }) => {
         ) : null}
 
         <ButtonsWrapper>
-          <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
+          <Button
+            frontColor="#BD3A0F"
+            shadowColor="#8C2B0B"
+            onClick={openMenu}
+            height="50"
+            width="100"
+          >
             <span>Меню</span>
-          </Button> 
-          <Button frontColor="#40BF4C" shadowColor="#1E9029" onClick={onClose} height="50" width="100">
+          </Button>
+          <Button
+            frontColor="#40BF4C"
+            shadowColor="#1E9029"
+            onClick={onClose}
+            height="50"
+            width="100"
+          >
             <span>Дальше</span>
           </Button>
         </ButtonsWrapper>

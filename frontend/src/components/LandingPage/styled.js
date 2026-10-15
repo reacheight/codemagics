@@ -7,12 +7,16 @@ export const LandingContainer = styled.div`
 
 export const HeroContainer = styled.div`
   min-width: 100%;
-  background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
+  background: linear-gradient(
+    to right,
+    rgba(25, 118, 210, 0.5),
+    rgba(33, 149, 243, 0.6)
+  );
   padding-block: 200px;
   padding-inline: 20px;
   position: relative;
   overflow: hidden;
-  
+
   @media (max-width: 768px) {
     padding-top: 150px;
     padding-bottom: 10px;
@@ -58,7 +62,6 @@ export const RightColumn = styled.div`
   min-width: 0;
   height: 350px;
   padding-top: 50px;
-
 
   @media (max-width: 768px) {
     transform: scale(0.75);
@@ -110,10 +113,22 @@ export const FeaturesContainer = styled.div`
   background:
     linear-gradient(rgba(79, 142, 247, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(79, 142, 247, 0.06) 1px, transparent 1px),
-    radial-gradient(1200px 400px at 85% 10%, rgba(99, 179, 237, 0.18), transparent 60%),
-    radial-gradient(900px 300px at 15% 35%, rgba(77, 133, 207, 0.12), transparent 60%),
-    radial-gradient(700px 240px at 50% 95%, rgba(45, 124, 212, 0.10), transparent 65%),
-    linear-gradient(#F7FBFF, #EAF4FF);
+    radial-gradient(
+      1200px 400px at 85% 10%,
+      rgba(99, 179, 237, 0.18),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 300px at 15% 35%,
+      rgba(77, 133, 207, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 240px at 50% 95%,
+      rgba(45, 124, 212, 0.1),
+      transparent 65%
+    ),
+    linear-gradient(#f7fbff, #eaf4ff);
   background-size:
     40px 40px,
     40px 40px,
@@ -204,7 +219,7 @@ export const FeatureVideo = styled.div`
 
   @media (max-width: 768px) {
     border-radius: 10px;
-    
+
     video {
       border-radius: 10px;
       max-height: 300px;
@@ -219,7 +234,11 @@ export const FeatureTitle = styled.h2`
   color: rgb(106, 193, 255);
   margin-bottom: 24px;
   line-height: 1.2;
-  text-shadow: 0 6px 30px rgb(255, 255, 255), 6px 0px 30px rgb(255, 255, 255), -6px 0 30px rgb(255, 255, 255), 0 -6px 30px rgb(255, 255, 255);
+  text-shadow:
+    0 6px 30px rgb(255, 255, 255),
+    6px 0px 30px rgb(255, 255, 255),
+    -6px 0 30px rgb(255, 255, 255),
+    0 -6px 30px rgb(255, 255, 255);
 
   @media (max-width: 768px) {
     font-size: 30px;
@@ -258,8 +277,6 @@ export const CurriculumContainer = styled.div`
   }
 `;
 
-
-
 export const CurriculumSection = styled.div`
   display: flex;
   gap: 60px;
@@ -282,17 +299,17 @@ export const ModulesList = styled.div`
 `;
 
 export const ModuleCard = styled.div`
-  background: ${props => props.isActive ? 'linear-gradient(135deg, #4F8EF7 0%, #6AC1FF 100%)' : '#f8f9fa'};
+  background: ${(props) => (props.isActive ? 'linear-gradient(135deg, #4F8EF7 0%, #6AC1FF 100%)' : '#f8f9fa')};
   border-radius: 16px;
   padding: 15px;
   cursor: pointer;
   transition: all 0.3s ease;
-  border: 2px solid ${props => props.isActive ? 'transparent' : '#e9ecef'};
+  border: 2px solid ${(props) => (props.isActive ? 'transparent' : '#e9ecef')};
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    border-color: ${props => props.isActive ? 'transparent' : '#6AC1FF'};
+    border-color: ${(props) => (props.isActive ? 'transparent' : '#6AC1FF')};
   }
 
   @media (max-width: 768px) {
@@ -304,7 +321,7 @@ export const ModuleTitle = styled.h3`
   font-family: 'Montserrat', sans-serif;
   font-size: 24px;
   font-weight: 700;
-  color: ${props => props.isActive ? '#fff' : '#1a202c'};
+  color: ${(props) => (props.isActive ? '#fff' : '#1a202c')};
   margin: 0 0 8px 0;
   line-height: 1.2;
 
@@ -316,7 +333,7 @@ export const ModuleTitle = styled.h3`
 export const ModuleSubtitle = styled.p`
   font-family: 'Inter', sans-serif;
   font-size: 16px;
-  color: ${props => props.isActive ? 'rgba(255, 255, 255, 0.8)' : '#64748b'};
+  color: ${(props) => (props.isActive ? 'rgba(255, 255, 255, 0.8)' : '#64748b')};
   margin: 0;
   line-height: 1.4;
 
@@ -327,7 +344,11 @@ export const ModuleSubtitle = styled.p`
 
 export const CurriculumContent = styled.div`
   flex: 1;
-  background: linear-gradient(to right,rgba(25, 118, 210, 0.5),rgba(33, 149, 243, 0.6));
+  background: linear-gradient(
+    to right,
+    rgba(25, 118, 210, 0.5),
+    rgba(33, 149, 243, 0.6)
+  );
   border-radius: 20px;
   padding: 30px;
   border: 1px solid #e2e8f0;
@@ -427,7 +448,7 @@ export const DemoLevelSkeletonWrapper = styled.div`
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  background: linear-gradient(#99C979, #5F9F6E);
+  background: linear-gradient(#99c979, #5f9f6e);
   backdrop-filter: blur(10px);
   border-radius: 20px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -498,17 +519,19 @@ export const CloudsContainer = styled.div`
 /* Отдельное облако */
 export const CloudImage = styled.img`
   position: absolute;
-  width: ${props => props.size || 80}px;
+  width: ${(props) => props.size || 80}px;
   height: auto;
-  top: ${props => props.top || '20%'};
-  left: ${props => props.left || '10%'};
-  opacity: ${props => props.opacity || 0.7};
-  animation: ${props => `float-${props.direction || 'horizontal'} ${props.duration || 15}s ease-in-out infinite`};
-  animation-delay: ${props => props.delay || '0s'};
-  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.05)) drop-shadow(0 4px 3px rgba(0, 0, 0, 0.13));
+  top: ${(props) => props.top || '20%'};
+  left: ${(props) => props.left || '10%'};
+  opacity: ${(props) => props.opacity || 0.7};
+  animation: ${(props) => `float-${props.direction || 'horizontal'} ${props.duration || 15}s ease-in-out infinite`};
+  animation-delay: ${(props) => props.delay || '0s'};
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.05))
+    drop-shadow(0 4px 3px rgba(0, 0, 0, 0.13));
 
   @keyframes float-horizontal {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateX(0px) translateY(0px);
     }
     50% {
@@ -517,7 +540,8 @@ export const CloudImage = styled.img`
   }
 
   @keyframes float-vertical {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateX(0px) translateY(0px);
     }
     50% {
@@ -526,7 +550,8 @@ export const CloudImage = styled.img`
   }
 
   @keyframes float-diagonal {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateX(0px) translateY(0px);
     }
     50% {
@@ -535,7 +560,7 @@ export const CloudImage = styled.img`
   }
 
   @media (max-width: 768px) {
-    width: ${props => (props.size || 80) * 0.6}px;
+    width: ${(props) => (props.size || 80) * 0.6}px;
   }
 `;
 
@@ -563,7 +588,9 @@ export const TelegramPostWidget = styled.div`
   overflow: hidden;
   max-width: 800px;
   width: 100%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-4px);
@@ -662,7 +689,7 @@ export const TelegramPostImage = styled.div`
   flex: 0 0 180px;
   display: flex;
   align-items: flex-start;
-  
+
   img {
     width: 100%;
     height: auto;
@@ -675,7 +702,7 @@ export const TelegramPostImage = styled.div`
     flex: none;
     width: 100%;
     justify-content: center;
-    
+
     img {
       width: 70%;
       max-width: 300px;
@@ -758,6 +785,3 @@ export const TelegramChannelLink = styled.a`
     font-size: 13px;
   }
 `;
-
-
-

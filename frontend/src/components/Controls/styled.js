@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   position: fixed;
   bottom: 20px;
   right: 529px;
-    
+
   background-color: #2a2623;
 
   border: 4px solid rgba(255, 255, 255, 0.1);
@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   border-right: none;
 
   box-shadow: 0 30px rgba(37, 34, 32, 1);
-  
+
   z-index: 101;
 `;
 
@@ -24,4 +24,4 @@ export const Buttons = styled.div`
 
   position: relative;
   bottom: 40px;
-`
+`;

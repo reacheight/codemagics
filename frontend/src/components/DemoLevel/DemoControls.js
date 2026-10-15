@@ -14,10 +14,10 @@ export const DemoControls = ({
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [shouldFloat, setShouldFloat] = useState(false);
-  
+
   useEffect(() => {
     let timeoutId;
-    
+
     if (!isHovered) {
       timeoutId = setTimeout(() => {
         setShouldFloat(true);
@@ -25,7 +25,7 @@ export const DemoControls = ({
     } else {
       setShouldFloat(false);
     }
-    
+
     return () => {
       if (timeoutId) {
         clearTimeout(timeoutId);
@@ -42,7 +42,7 @@ export const DemoControls = ({
   }, []);
 
   return (
-    <ControlWrapper 
+    <ControlWrapper
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -120,4 +120,4 @@ export const DemoControls = ({
       </ControlButtons>
     </ControlWrapper>
   );
-}; 
+};

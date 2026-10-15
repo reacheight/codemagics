@@ -2,7 +2,16 @@ import React from 'react';
 import { HeroTooltip } from '../HeroTooltip/HeroTooltip';
 import { Wrapper } from './styled';
 
-export const Hero = ({ x, y, alive, zIndex, shift, animated, texts, spedUp }) => (
+export const Hero = ({
+  x,
+  y,
+  alive,
+  zIndex,
+  shift,
+  animated,
+  texts,
+  spedUp,
+}) => (
   <>
     <HeroTooltip texts={texts} />
     <Wrapper

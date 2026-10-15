@@ -1,52 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Layout } from '../Layout/Layout';
-import { LoginModal } from '../LoginModal/LoginModal';
 import { Container } from './styled';
 
 import { useGameData } from '../../hooks/useGameData';
 import { useMapLayout } from './hooks/useMapLayout';
 import { useNavigation } from './hooks/useNavigation';
-import { useUser } from '../../contexts/UserContext';
 
 import { ModuleCard } from './components/ModuleCard';
 import { GameMap } from './components/GameMap';
 import { LoadingState } from './components/LoadingState';
 import { ErrorState } from './components/ErrorState';
 
-import { MODULE_CONFIG, UI_TEXT } from './constants';
-
 export const MainPage = () => {
-  const {
-    completedLevelsCount,
-    isLoading: isGameDataLoading,
-    error,
-    isLevelCompleted,
-    isLevelAvailable,
-    isLevelCurrent,
-    refetchData
-  } = useGameData();
+  const { isLoading: isGameDataLoading, error, refetchData } = useGameData();
 
-  const { isLoading: isUserLoading, isAuthenticated } = useUser();
+  const { mapRef, theoreticalDimensions, convertCoordinates } = useMapLayout();
 
-  const {
-    mapRef,
-    theoreticalDimensions,
-    convertCoordinates,
-    isLayoutReady
-  } = useMapLayout();
+  const { handleLevelClick } = useNavigation();
 
-  const {
-    showLoginModal,
-    handleLevelClick,
-    handleModalClose,
-    handleLoginSuccess
-  } = useNavigation(isAuthenticated);
-
-  const progressPercentage = useMemo(() => {
-    return Math.round((completedLevelsCount / MODULE_CONFIG.totalLevels) * 100);
-  }, [completedLevelsCount]);
-
-  if (isUserLoading || isGameDataLoading) {
+  if (isGameDataLoading) {
     return (
       <Layout isGamePage>
         <Container>
@@ -60,10 +32,7 @@ export const MainPage = () => {
     return (
       <Layout isGamePage>
         <Container>
-          <ErrorState 
-            message={error}
-            onRetry={refetchData}
-          />
+          <ErrorState message={error} onRetry={refetchData} />
         </Container>
       </Layout>
     );
@@ -72,32 +41,20 @@ export const MainPage = () => {
   return (
     <Layout isGamePage>
       <Container>
-        <ModuleCard
-          completedLevelsCount={completedLevelsCount}
-          progressPercentage={progressPercentage}
-        />
+        <ModuleCard completedLevelsCount={0} progressPercentage={0} />
 
         <GameMap
           mapRef={mapRef}
           theoreticalDimensions={theoreticalDimensions}
           convertCoordinates={convertCoordinates}
-          isLayoutReady={isLayoutReady}
           onLevelClick={handleLevelClick}
-          isLevelCompleted={isLevelCompleted}
-          isLevelCurrent={isLevelCurrent}
-          isLevelAvailable={isLevelAvailable}
+          isLevelCompleted={false}
+          isLevelCurrent={false}
+          isLevelAvailable={true}
         />
       </Container>
-
-      {showLoginModal && (
-        <LoginModal 
-          title={UI_TEXT.loginTitle}
-          onClose={handleModalClose}
-          onSuccess={handleLoginSuccess}
-        />
-      )}
     </Layout>
   );
 };
 
-MainPage.displayName = 'MainPage'; 
+MainPage.displayName = 'MainPage';

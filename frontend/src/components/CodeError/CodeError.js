@@ -33,10 +33,10 @@ export const CodeError = ({ codeErrors, onErrorsClear }) => {
       <Divider />
       <Message>
         {splitStringOutsideQuotes(error.message).map((text, i) => {
-          if (text.includes("`")) {
+          if (text.includes('`')) {
             return <Tag key={i}>{text.replace(/`/g, '')}</Tag>;
           } else {
-            return <span key={i}>{text}</span>
+            return <span key={i}>{text}</span>;
           }
         })}
       </Message>

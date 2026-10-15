@@ -27,4 +27,4 @@ export const DemoButton = ({ isFloating, animationDelay = 0, ...props }) => (
   <AnimatedWrapper isFloating={isFloating} animationDelay={animationDelay}>
     <Button {...props} />
   </AnimatedWrapper>
-); 
+);

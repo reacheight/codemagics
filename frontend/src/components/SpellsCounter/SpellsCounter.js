@@ -1,5 +1,10 @@
 import React from 'react';
-import { SpellsCounterWrapper, SpellIcon, SpellText, SpellItem } from './styled';
+import {
+  SpellsCounterWrapper,
+  SpellIcon,
+  SpellText,
+  SpellItem,
+} from './styled';
 
 export const SpellsCounter = ({ fireballCount = 0, totalFireballs = 0 }) => {
   if (totalFireballs === 0) {

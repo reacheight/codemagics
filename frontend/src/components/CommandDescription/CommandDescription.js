@@ -10,7 +10,7 @@ import {
   CodeMirrorWrapper,
 } from './styled';
 
-import { extract } from '../../utils/extract'
+import { extract } from '../../utils/extract';
 import CodeMirror from '@uiw/react-codemirror';
 import { vscodeDarkInit } from '@uiw/codemirror-theme-vscode';
 import { tags as t } from '@lezer/highlight';

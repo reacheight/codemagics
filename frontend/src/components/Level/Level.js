@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import {
@@ -21,9 +21,11 @@ import {
 import { axios } from '../../api/axios';
 
 import { audioManager, SOUND_NAMES } from '../../utils/audioManager';
-import { GAME_CONFIG, STORAGE_KEYS, API_ENDPOINTS } from '../../constants/gameConstants';
-import { MODULE_CONFIG } from '../MainPage/constants';
-import { saveLocalProgress } from '../../utils/progressSync';
+import {
+  GAME_CONFIG,
+  STORAGE_KEYS,
+  API_ENDPOINTS,
+} from '../../constants/gameConstants';
 import { useGameExecution } from '../../hooks/useGameExecution';
 import { useRefState } from '../../hooks/useRefState';
 import { Controls } from '../Controls/Controls';
@@ -41,9 +43,6 @@ import { Button } from '../Button/Button';
 import { Bridge } from '../Bridge/Bridge';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { useGameData } from '../../hooks/useGameData';
-import { LoginModal } from '../LoginModal/LoginModal';
-import { UnavailableLevelModal } from '../UnavailableLevelModal/UnavailableLevelModal';
-import { useUser } from '../../contexts/UserContext';
 import { wizardsToCells } from '../../utils/wizardZoneUtils';
 import { WizardZoneCell } from '../WizardZoneCell';
 import { SpellsCounter } from '../SpellsCounter';
@@ -66,15 +65,12 @@ const prepareCells = (grid) => {
   return cells;
 };
 
-
-
 export const Level = () => {
   const { gameId, id } = useParams();
   const navigate = useNavigate();
   const { height: innerHeight } = useWindowSize();
 
-  if (id > GAME_CONFIG.LEVELS.MAX_LEVEL)
-    return <>Уровень не найден</>;
+  if (id > GAME_CONFIG.LEVELS.MAX_LEVEL) return <>Уровень не найден</>;
 
   const gameExecution = useGameExecution();
 
@@ -92,25 +88,17 @@ export const Level = () => {
   const [dragStart, setDragStart] = useRefState({ x: 0, y: 0 });
   const dragAnimationFrame = useRefState(null);
 
-  const {
-    completedLevelsCount,
-    isLoading: isGameDataLoading,
-    refetchData: refreshGameData,
-  } = useGameData();
-
-  const { user, isLoading: isUserLoading, isAuthenticated } = useUser();
-
-  const showLoginModal = id > MODULE_CONFIG.freeLevels && process.env.REACT_APP_SHOW_LOGIN_MODAL === 'true' && !isUserLoading && !isAuthenticated;
-  const showAccessModal = false && id > 6 && !!user && !user.hasAccess;
-  const showPreviousLevelsModal = process.env.REACT_APP_SHOW_PREV_LEVEL_MODAL === 'true' && !showAccessModal && !isUserLoading && !isGameDataLoading && isAuthenticated && completedLevelsCount + 1 < id;
+  const { refetchData: refreshGameData } = useGameData();
 
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
 
   const showHeroGoals = () => {
-    const goals = initialLevelData.current.goals.filter((goal) => !!goal.heroText).map((goal) => ({
-      value: goal.heroText,
-    }));
+    const goals = initialLevelData.current.goals
+      .filter((goal) => !!goal.heroText)
+      .map((goal) => ({
+        value: goal.heroText,
+      }));
     gameExecution.setHeroTexts(goals);
   };
 
@@ -126,7 +114,9 @@ export const Level = () => {
   };
 
   const fetchInstructions = async () => {
-    const { data } = await axios.get(API_ENDPOINTS.LEVEL_INSTRUCTIONS(gameId, id));
+    const { data } = await axios.get(
+      API_ENDPOINTS.LEVEL_INSTRUCTIONS(gameId, id),
+    );
     setInstructions(data);
 
     if (hasGuid(data)) {
@@ -149,31 +139,39 @@ export const Level = () => {
     setIsScoreOpen(false);
     setInstructions(null);
     setCode(getInitialCodeFromStorage(gameId, id));
-    
+
     // Reset game execution state
     gameExecution.setIsActuallyRunning(false);
     gameExecution.setIsStopped(false);
     gameExecution.setIsPaused(false);
     gameExecution.setLevelResult(null);
     gameExecution.resetExecutionState();
-    
+
     refreshGameData();
   };
 
   useEffect(() => {
     (async () => {
       resetAllData();
-      await Promise.all([fetchGames(), fetchLevelData(), fetchInstructions(), fetchInitialCode()]);
-      
+      await Promise.all([
+        fetchGames(),
+        fetchLevelData(),
+        fetchInstructions(),
+        fetchInitialCode(),
+      ]);
+
       if (innerHeight <= GAME_CONFIG.SCREEN.MOBILE_HEIGHT) {
         const { width, height } = initialLevelData.current;
         const levelSize = width * height;
-        
+
         if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.LARGE_LEVEL)
           setScale(0.7);
         else if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.MEDIUM_LEVEL)
           setScale(0.9);
-        else if (levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.SMALL_LEVEL || height >= 8) {
+        else if (
+          levelSize >= GAME_CONFIG.SCREEN.SCALE_THRESHOLDS.SMALL_LEVEL ||
+          height >= 8
+        ) {
           setScale(1);
         }
       }
@@ -189,11 +187,12 @@ export const Level = () => {
     };
   }, []);
 
-
-
   const execCommands = async () => {
-    const { commands, gameplayError, goals } = gameExecution.levelResult.current;
-    const allRequiredGoalsCompleted = goals.filter(g => g.required).every(g => g.completed);
+    const { commands, gameplayError, goals } =
+      gameExecution.levelResult.current;
+    const allRequiredGoalsCompleted = goals
+      .filter((g) => g.required)
+      .every((g) => g.completed);
 
     if (commands.length === 0) {
       gameExecution.setHeroTextsForGameplayError(gameplayError);
@@ -201,7 +200,11 @@ export const Level = () => {
       return;
     }
 
-    for (let i = gameExecution.pausedCommand.current || 0; i < commands.length; i++) {
+    for (
+      let i = gameExecution.pausedCommand.current || 0;
+      i < commands.length;
+      i++
+    ) {
       if (gameExecution.isPaused.current) {
         gameExecution.setPausedCommand(i);
         gameExecution.setIsActuallyRunning(false);
@@ -213,13 +216,18 @@ export const Level = () => {
         break;
       }
 
-      await gameExecution.executeCommand(commands[i], i, levelData, setLevelData);
+      await gameExecution.executeCommand(
+        commands[i],
+        i,
+        levelData,
+        setLevelData,
+      );
 
       if (i === commands.length - 1) {
         gameExecution.setIsActuallyRunning(false);
         gameExecution.setIsStopped(false);
         gameExecution.setIsPaused(false);
-        
+
         if (!allRequiredGoalsCompleted) {
           gameExecution.setForceShowGoals(true);
           gameExecution.setHeroTextsForGameplayError(gameplayError);
@@ -227,31 +235,25 @@ export const Level = () => {
         } else {
           gameExecution.setIsLevelFinished(true);
           gameExecution.setForceShowGoals(true);
-          gameExecution.setHeroTexts([{ value: 'Отлично, мы можем идти дальше', delay: 1500 }]);
+          gameExecution.setHeroTexts([
+            { value: 'Отлично, мы можем идти дальше', delay: 1500 },
+          ]);
           await delay(1500);
           audioManager.play(SOUND_NAMES.VICTORY);
           setIsGuideOpen(false);
           setIsScoreOpen(true);
-
-          if (!isAuthenticated) {
-            saveLocalProgress(parseInt(id, 10));
-          }
         }
       }
     }
   };
 
-
-
-
-
   const resetData = () => {
     setLevelData({ ...initialLevelData.current });
     setCodeErrors(null);
-    
+
     // Reset game execution state
     gameExecution.resetExecutionState();
-    
+
     if (dragAnimationFrame.current) {
       cancelAnimationFrame(dragAnimationFrame.current);
       dragAnimationFrame.current = null;
@@ -264,11 +266,15 @@ export const Level = () => {
     setInitialCode(gameId, id, code.current);
 
     try {
-      const { data } = await axios.post(API_ENDPOINTS.LEVEL_RUN(gameId, id), {
-        code: code.current,
-      }, {
-        withCredentials: true,
-      });
+      const { data } = await axios.post(
+        API_ENDPOINTS.LEVEL_RUN(gameId, id),
+        {
+          code: code.current,
+        },
+        {
+          withCredentials: true,
+        },
+      );
 
       gameExecution.setLevelResult(data);
       gameExecution.setIsActuallyRunning(true);
@@ -301,7 +307,9 @@ export const Level = () => {
 
     // Don't pause on the last command
     const isLastCommandExecuting =
-      gameExecution.levelResult.current && gameExecution.executingCommand.current === gameExecution.levelResult.current.commands.length - 1;
+      gameExecution.levelResult.current &&
+      gameExecution.executingCommand.current ===
+        gameExecution.levelResult.current.commands.length - 1;
 
     if (!isLastCommandExecuting) {
       gameExecution.setIsPaused(true);
@@ -318,7 +326,7 @@ export const Level = () => {
     if (gameExecution.isPaused.current) {
       gameExecution.setIsPaused(false);
     }
-  }
+  };
 
   const stopGame = () => {
     stopGameWithoutResetting();
@@ -353,7 +361,7 @@ export const Level = () => {
     gameExecution.setIsLevelFinished(false);
     setIsScoreOpen(false);
     resetData();
-  }
+  };
 
   const increaseScale = (coefficient = 1) => {
     setScale((prevState) => {
@@ -394,7 +402,10 @@ export const Level = () => {
   const handleMouseDown = (e) => {
     if (e.button === 0) {
       setIsDragging(true);
-      setDragStart({ x: e.clientX - dragPosition.current.x, y: e.clientY - dragPosition.current.y });
+      setDragStart({
+        x: e.clientX - dragPosition.current.x,
+        y: e.clientY - dragPosition.current.y,
+      });
       e.preventDefault();
     }
   };
@@ -403,7 +414,7 @@ export const Level = () => {
     if (dragAnimationFrame.current) {
       cancelAnimationFrame(dragAnimationFrame.current);
     }
-    
+
     dragAnimationFrame.current = requestAnimationFrame(() => {
       if (isDragging.current) {
         const newX = clientX - dragStart.current.x;
@@ -456,29 +467,47 @@ export const Level = () => {
     finish,
   } = initialLevelData.current;
   const cells = prepareCells(grid);
-  const walls = cells.filter(cell => GAME_CONFIG.WALL_TYPES.includes(cell.type));
-  const trees = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.TREE);
-  const rocks = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.ROCK);
-  const water = walls.filter((wall) => wall.type === GAME_CONFIG.CELL_TYPES.WATER || wall.type === GAME_CONFIG.CELL_TYPES.WATER_TOP);
+  const walls = cells.filter((cell) =>
+    GAME_CONFIG.WALL_TYPES.includes(cell.type),
+  );
+  const trees = walls.filter(
+    (wall) => wall.type === GAME_CONFIG.CELL_TYPES.TREE,
+  );
+  const rocks = walls.filter(
+    (wall) => wall.type === GAME_CONFIG.CELL_TYPES.ROCK,
+  );
+  const water = walls.filter(
+    (wall) =>
+      wall.type === GAME_CONFIG.CELL_TYPES.WATER ||
+      wall.type === GAME_CONFIG.CELL_TYPES.WATER_TOP,
+  );
   const executingLine =
-    gameExecution.levelResult.current?.commands[gameExecution.executingCommand.current]?.start.line;
+    gameExecution.levelResult.current?.commands[
+      gameExecution.executingCommand.current
+    ]?.start.line;
   const isLastLevel = Number(id) === game.levels;
-  const wizards = enemies.filter(enemy => enemy.isWizard && enemy.zone);
+  const wizards = enemies.filter((enemy) => enemy.isWizard && enemy.zone);
   const wizardZonesCells = wizardsToCells(wizards);
 
   return (
     <Wrapper>
       <MenuButton>
-        <Button frontColor="#BD3A0F" shadowColor="#8C2B0B" onClick={openMenu} height="50" width="100">
+        <Button
+          frontColor="#BD3A0F"
+          shadowColor="#8C2B0B"
+          onClick={openMenu}
+          height="50"
+          width="100"
+        >
           <span>Меню</span>
-        </Button> 
+        </Button>
       </MenuButton>
       <Goals
         forceOpen={gameExecution.forceShowGoals}
         goals={initialLevelData.current.goals}
         goalsResult={gameExecution.levelResult.current?.goals || []}
       />
-      <SpellsCounter 
+      <SpellsCounter
         fireballCount={levelData.current.fireballCount || 0}
         totalFireballs={initialLevelData.current.fireballCount || 0}
       />
@@ -492,9 +521,7 @@ export const Level = () => {
           dragPosition={dragPosition.current}
           isDragging={isDragging.current}
         >
-          <MapWrapper 
-            scale={scale}
-          >
+          <MapWrapper scale={scale}>
             <MapField width={width} height={height}>
               {cells.map((cell) => {
                 if (cell.type === GAME_CONFIG.CELL_TYPES.SAND) {
@@ -503,19 +530,21 @@ export const Level = () => {
                       <CellFilter x={cell.x} y={cell.y} />
                     </Sand>
                   );
-                }
-                else {
+                } else {
                   return (
                     <Lawn key={`${cell.x}${cell.y}`} x={cell.x} y={cell.y}>
                       <CellFilter x={cell.x} y={cell.y} />
                     </Lawn>
-                  )
+                  );
                 }
               })}
               <Finish x={finish.x} y={finish.y} zIndex={finish.x} />
               {water.map((water) => (
                 <Water
-                  isTop={water.x === 0 || grid[water.x - 1][water.y] !== GAME_CONFIG.CELL_TYPES.WATER}
+                  isTop={
+                    water.x === 0 ||
+                    grid[water.x - 1][water.y] !== GAME_CONFIG.CELL_TYPES.WATER
+                  }
                   key={`${water.x}${water.y}`}
                   x={water.x}
                   y={water.y}
@@ -554,7 +583,6 @@ export const Level = () => {
                   yEnd={bridge.end.y}
                   vertical={bridge.vertical}
                   activated={bridge.activated}
-
                 />
               ))}
               {enemies.map((enemy) => (
@@ -571,9 +599,13 @@ export const Level = () => {
                   alive={enemy.alive}
                   nameHidden={enemy.hidden}
                   spedUp={false}
-
                   isBig={enemy.big}
-                  shift={gameExecution.enemyShifts.current[enemy.name] ?? { bottom: 0, right: 0 }}
+                  shift={
+                    gameExecution.enemyShifts.current[enemy.name] ?? {
+                      bottom: 0,
+                      right: 0,
+                    }
+                  }
                 />
               ))}
               <Hero
@@ -617,29 +649,30 @@ export const Level = () => {
                   range={gameExecution.activeFireball.range}
                 />
               )}
-              {wizardZonesCells.length > 0 && wizardZonesCells.map((cell) => (
-                <WizardZoneCell 
-                  key={`wizard-zone-${cell.x}-${cell.y}`} 
-                  x={cell.x} 
-                  y={cell.y} 
-                  isWizardAlive={cell.isWizardAlive} 
-                />
-              ))}
+              {wizardZonesCells.length > 0 &&
+                wizardZonesCells.map((cell) => (
+                  <WizardZoneCell
+                    key={`wizard-zone-${cell.x}-${cell.y}`}
+                    x={cell.x}
+                    y={cell.y}
+                    isWizardAlive={cell.isWizardAlive}
+                  />
+                ))}
             </MapField>
           </MapWrapper>
         </DragWrapper>
       </MainWrapper>
       <Controls
-          isRunning={gameExecution.isActuallyRunning.current}
-          isPaused={gameExecution.isPaused.current}
-          isLevelFinished={gameExecution.isLevelFinished}
-          hasGuide={hasGuid(instructions)}
-          onStart={startGame}
-          onPause={pauseGame}
-          onContinue={continueGame}
-          onStop={stopGame}
-          onGuideOpen={openGuide}
-        />
+        isRunning={gameExecution.isActuallyRunning.current}
+        isPaused={gameExecution.isPaused.current}
+        isLevelFinished={gameExecution.isLevelFinished}
+        hasGuide={hasGuid(instructions)}
+        onStart={startGame}
+        onPause={pauseGame}
+        onContinue={continueGame}
+        onStop={stopGame}
+        onGuideOpen={openGuide}
+      />
       <CodeEditor
         code={code.current}
         codeErrors={codeErrors}
@@ -661,9 +694,6 @@ export const Level = () => {
           onClose={closeScore}
         />
       )}
-      {showLoginModal && <LoginModal title='Войдите, чтобы продолжить игру' canClose={false} />}
-      {showPreviousLevelsModal && <UnavailableLevelModal />}
-      {showAccessModal && <UnavailableLevelModal dontHaveAccess />}
     </Wrapper>
   );
 };

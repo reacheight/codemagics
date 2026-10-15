@@ -17,19 +17,19 @@ export const useGameExecution = () => {
   const [isStopped, setIsStopped] = useRefState(false);
   const [isMoving, setIsMoving] = useRefState(false);
   const [isLevelFinished, setIsLevelFinished] = useState(false);
-  
+
   // Command execution state
   const [levelResult, setLevelResult] = useRefState(null);
   const [executingCommand, setExecutingCommand] = useRefState(null);
   const [pausedCommand, setPausedCommand] = useRefState(null);
-  
+
   // Hero and enemy positions
   const [heroShift, setHeroShift] = useRefState({ right: 0, bottom: 0 });
   const [enemyShifts, setEnemyShifts] = useRefState({});
-  
+
   // Fireball state
   const [activeFireball, setActiveFireball] = useState(null);
-  
+
   // UI state
   const [heroTexts, setHeroTexts] = useState([]);
   const [forceShowGoals, setForceShowGoals] = useState(false);
@@ -37,68 +37,76 @@ export const useGameExecution = () => {
   /**
    * Execute a single game command with appropriate animations and effects
    */
-  const executeCommand = useCallback(async (command, commandIndex, levelData, setLevelData) => {
-    const updatedLevelData = copy(levelData.current);
-    setExecutingCommand(commandIndex);
+  const executeCommand = useCallback(
+    async (command, commandIndex, levelData, setLevelData) => {
+      const updatedLevelData = copy(levelData.current);
+      setExecutingCommand(commandIndex);
 
-    switch (command.name) {
-      case COMMAND_NAMES.ENEMY_ATTACK:
-        await handleEnemyAttack(command, updatedLevelData);
-        break;
+      switch (command.name) {
+        case COMMAND_NAMES.ENEMY_ATTACK:
+          await handleEnemyAttack(command, updatedLevelData);
+          break;
 
-      case COMMAND_NAMES.HERO_ENTERED_WIZARD_ZONE:
-        await handleHeroEnteredWizardZone(command, updatedLevelData);
-        break;
-        
-      case COMMAND_NAMES.MOVE_UP:
-      case COMMAND_NAMES.MOVE_DOWN:
-      case COMMAND_NAMES.MOVE_LEFT:
-      case COMMAND_NAMES.MOVE_RIGHT:
-        await handleHeroMovement(command, updatedLevelData);
-        break;
-        
-      case COMMAND_NAMES.ATTACK:
-        await handleHeroAttack(command, updatedLevelData);
-        break;
-        
-      case COMMAND_NAMES.SWITCH:
-        await handleLeverSwitch(command, updatedLevelData);
-        break;
-        
-      case COMMAND_NAMES.FIND_NEAREST_ENEMY:
-        await handleFindNearestEnemy(command);
-        break;
-        
-      case COMMAND_NAMES.HAS_ENEMY_AROUND:
-        await handleHasEnemyAround(command);
-        break;
-        
-      case COMMAND_NAMES.ENEMY_MOVE:
-        await handleEnemyMovement(command, updatedLevelData);
-        break;
-        
-      case COMMAND_NAMES.FIREBALL_UP:
-      case COMMAND_NAMES.FIREBALL_DOWN:
-      case COMMAND_NAMES.FIREBALL_LEFT:
-      case COMMAND_NAMES.FIREBALL_RIGHT:
-        await handleFireball(command, updatedLevelData);
-        break;
-    }
+        case COMMAND_NAMES.HERO_ENTERED_WIZARD_ZONE:
+          await handleHeroEnteredWizardZone(command, updatedLevelData);
+          break;
 
-    if (!isStopped.current) {
-      setLevelData(updatedLevelData);
-    }
+        case COMMAND_NAMES.MOVE_UP:
+        case COMMAND_NAMES.MOVE_DOWN:
+        case COMMAND_NAMES.MOVE_LEFT:
+        case COMMAND_NAMES.MOVE_RIGHT:
+          await handleHeroMovement(command, updatedLevelData);
+          break;
 
-    // Handle post-command delays
-    if (command.name === COMMAND_NAMES.SWITCH) {
-      await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.switching);
-    } else if (command.name === COMMAND_NAMES.ATTACK) {
-      audioManager.play(SOUND_NAMES.HIT);
-      await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.attacking);
-    } else if (command.name === COMMAND_NAMES.FIREBALL_UP || command.name === COMMAND_NAMES.FIREBALL_DOWN || command.name === COMMAND_NAMES.FIREBALL_LEFT || command.name === COMMAND_NAMES.FIREBALL_RIGHT) {
-      await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.fireball);
-    }
-  }, [isStopped]);
+        case COMMAND_NAMES.ATTACK:
+          await handleHeroAttack(command, updatedLevelData);
+          break;
+
+        case COMMAND_NAMES.SWITCH:
+          await handleLeverSwitch(command, updatedLevelData);
+          break;
+
+        case COMMAND_NAMES.FIND_NEAREST_ENEMY:
+          await handleFindNearestEnemy(command);
+          break;
+
+        case COMMAND_NAMES.HAS_ENEMY_AROUND:
+          await handleHasEnemyAround(command);
+          break;
+
+        case COMMAND_NAMES.ENEMY_MOVE:
+          await handleEnemyMovement(command, updatedLevelData);
+          break;
+
+        case COMMAND_NAMES.FIREBALL_UP:
+        case COMMAND_NAMES.FIREBALL_DOWN:
+        case COMMAND_NAMES.FIREBALL_LEFT:
+        case COMMAND_NAMES.FIREBALL_RIGHT:
+          await handleFireball(command, updatedLevelData);
+          break;
+      }
+
+      if (!isStopped.current) {
+        setLevelData(updatedLevelData);
+      }
+
+      // Handle post-command delays
+      if (command.name === COMMAND_NAMES.SWITCH) {
+        await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.switching);
+      } else if (command.name === COMMAND_NAMES.ATTACK) {
+        audioManager.play(SOUND_NAMES.HIT);
+        await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.attacking);
+      } else if (
+        command.name === COMMAND_NAMES.FIREBALL_UP ||
+        command.name === COMMAND_NAMES.FIREBALL_DOWN ||
+        command.name === COMMAND_NAMES.FIREBALL_LEFT ||
+        command.name === COMMAND_NAMES.FIREBALL_RIGHT
+      ) {
+        await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.fireball);
+      }
+    },
+    [isStopped],
+  );
 
   /**
    * Handle enemy attack on hero
@@ -207,18 +215,19 @@ export const useGameExecution = () => {
     if (leverIndex !== -1) {
       updatedLevers[leverIndex].enabled = !updatedLevers[leverIndex].enabled;
     }
-    
+
     if (bridgeIndex !== -1) {
-      updatedBridges[bridgeIndex].activated = !updatedBridges[bridgeIndex].activated;
+      updatedBridges[bridgeIndex].activated =
+        !updatedBridges[bridgeIndex].activated;
     }
 
     // Handle enemies on bridge
-    const enemiesIndexes = command.enemiesOnBridge.map(enemyName => 
-      updatedEnemies.findIndex(e => e.name === enemyName)
+    const enemiesIndexes = command.enemiesOnBridge.map((enemyName) =>
+      updatedEnemies.findIndex((e) => e.name === enemyName),
     );
-    
+
     if (bridgeIndex !== -1 && !updatedBridges[bridgeIndex].activated) {
-      enemiesIndexes.forEach(index => {
+      enemiesIndexes.forEach((index) => {
         if (index !== -1) {
           updatedEnemies[index].alive = false;
         }
@@ -240,10 +249,10 @@ export const useGameExecution = () => {
    * Handle find nearest enemy command
    */
   const handleFindNearestEnemy = async (command) => {
-    const message = command.hasEnemy 
+    const message = command.hasEnemy
       ? 'find_nearest_enemy: Я тебя вижу!'
       : 'find_nearest_enemy: На этом уровне нет врагов!';
-    
+
     setHeroTexts([{ value: message, delay: 1000 }]);
     await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.findingEnemy);
   };
@@ -252,10 +261,10 @@ export const useGameExecution = () => {
    * Handle has enemy around command
    */
   const handleHasEnemyAround = async (command) => {
-    const message = command.hasEnemy 
+    const message = command.hasEnemy
       ? 'has_enemy_around: Рядом враг!'
       : 'has_enemy_around: Рядом нет врагов!';
-    
+
     setHeroTexts([{ value: message, delay: 1000 }]);
     await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.hasEnemyAround);
   };
@@ -274,11 +283,11 @@ export const useGameExecution = () => {
     if (targetIndex === -1) return;
 
     const targetEnemy = updatedEnemies[targetIndex];
-    
+
     if (!updatedEnemyShifts[targetEnemy.name]) {
       updatedEnemyShifts[targetEnemy.name] = { bottom: 0, right: 0 };
     }
-    
+
     const currentShift = updatedEnemyShifts[targetEnemy.name];
 
     // Calculate enemy movement
@@ -302,7 +311,7 @@ export const useGameExecution = () => {
     }
 
     setEnemyShifts(updatedEnemyShifts);
-    
+
     await delay(GAME_CONFIG.MOVEMENT_DELAYS.NORMAL.enemyWalk);
 
     // Reset enemy shift
@@ -329,7 +338,7 @@ export const useGameExecution = () => {
     setActiveFireball(null);
 
     updatedLevelData.fireballCount -= 1;
-    
+
     if (command.hitTarget && command.hitTarget.type === 'enemy') {
       const updatedEnemies = copy(updatedLevelData.enemies);
       const targetIndex = updatedEnemies.findIndex(
@@ -339,9 +348,9 @@ export const useGameExecution = () => {
       if (targetIndex !== -1) {
         updatedEnemies[targetIndex].alive = false;
       }
-      
+
       updatedLevelData.enemies = updatedEnemies;
-      
+
       audioManager.play(SOUND_NAMES.FIREBALL_IMPACT);
     }
   };

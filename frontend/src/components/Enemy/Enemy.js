@@ -8,24 +8,24 @@ const computeDirection = ({ y, heroY, wizardZone }) => {
   }
 
   return y >= heroY ? 'left' : 'right';
-}
+};
 
-export const Enemy = ({ 
-  x, 
-  y, 
-  heroX, 
-  heroY, 
-  name, 
-  alive, 
-  nameHidden, 
-  spedUp, 
+export const Enemy = ({
+  x,
+  y,
+  heroX,
+  heroY,
+  name,
+  alive,
+  nameHidden,
+  spedUp,
   isBig,
   shift,
   isWizard,
-  wizardZone
+  wizardZone,
 }) => {
   const [deathDirection, setDeathDirection] = useState(null);
-  
+
   // Определяем тип врага
   const enemyType = isWizard ? 'wizard' : 'knight';
 
@@ -37,22 +37,32 @@ export const Enemy = ({
     }
   }, [alive]);
 
-  const direction = deathDirection || computeDirection({ y, heroY, wizardZone });
+  const direction =
+    deathDirection || computeDirection({ y, heroY, wizardZone });
 
   return (
-    <Wrapper 
+    <Wrapper
       enemyType={enemyType}
-      x={x} 
-      y={y} 
-      heroX={heroX} 
-      heroY={heroY} 
-      nameHidden={nameHidden} 
-      isBig={isBig} 
+      x={x}
+      y={y}
+      heroX={heroX}
+      heroY={heroY}
+      nameHidden={nameHidden}
+      isBig={isBig}
       shift={shift}
-      spedUp={spedUp} 
+      spedUp={spedUp}
     >
       {!nameHidden && <Name fade={!alive}>{name}</Name>}
-      <Image enemyType={enemyType} x={x} y={y} heroX={heroX} heroY={heroY} direction={direction} alive={alive} spedUp={spedUp} />
+      <Image
+        enemyType={enemyType}
+        x={x}
+        y={y}
+        heroX={heroX}
+        heroY={heroY}
+        direction={direction}
+        alive={alive}
+        spedUp={spedUp}
+      />
     </Wrapper>
   );
 };

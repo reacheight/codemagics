@@ -54,7 +54,7 @@ export const MainWrapper = styled.div`
   justify-content: center;
   flex-grow: 1;
   z-index: 100;
-  background-image: linear-gradient(#99C979, #5F9F6E);
+  background-image: linear-gradient(#99c979, #5f9f6e);
   overflow: hidden;
 `;
 
@@ -65,8 +65,11 @@ export const DragWrapper = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  transform: translate(${({ dragPosition }) => dragPosition.x}px, ${({ dragPosition }) => dragPosition.y}px);
-  cursor: ${({ isDragging }) => isDragging ? 'grabbing' : 'grab'};
+  transform: translate(
+    ${({ dragPosition }) => dragPosition.x}px,
+    ${({ dragPosition }) => dragPosition.y}px
+  );
+  cursor: ${({ isDragging }) => (isDragging ? 'grabbing' : 'grab')};
   user-select: none;
 `;
 
@@ -110,7 +113,7 @@ export const Lawn = styled.div`
 export const Sand = styled.div`
   height: 50px;
   width: 50px;
-  background-color:rgb(202, 166, 127);
+  background-color: rgb(202, 166, 127);
 
   ${({ x, y }) => css`
     z-index: -1;
@@ -126,9 +129,9 @@ export const CellFilter = styled.div`
   width: 50px;
 
   ${({ x, y }) => css`
-      background-color: ${((x + y) % 2 == 0) ? "rgba(255, 255, 255, 0.2)" : "rgba(0, 0, 0, 0.03)"};
-    `}
-`
+    background-color: ${(x + y) % 2 == 0 ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.03)'};
+  `}
+`;
 
 export const Tree = styled.div`
   width: 100px;

@@ -47,16 +47,16 @@ class AudioManager {
     try {
       // Reset to beginning if already playing
       sound.currentTime = 0;
-      
+
       if (options.volume !== undefined) {
         sound.volume = Math.max(0, Math.min(1, options.volume));
       }
 
       const playPromise = sound.play();
-      
+
       // Handle play promise for browsers that require user interaction
       if (playPromise !== undefined) {
-        playPromise.catch(error => {
+        playPromise.catch((error) => {
           console.warn(`Failed to play sound "${soundName}":`, error);
         });
       }
@@ -104,7 +104,7 @@ class AudioManager {
    * @param {number} volume - Volume level (0-1)
    */
   setMasterVolume(volume) {
-    Object.values(this.sounds).forEach(sound => {
+    Object.values(this.sounds).forEach((sound) => {
       sound.volume = Math.max(0, Math.min(1, volume));
     });
   }
@@ -113,7 +113,7 @@ class AudioManager {
    * Preload all sounds (useful for better performance)
    */
   preloadAll() {
-    Object.values(this.sounds).forEach(sound => {
+    Object.values(this.sounds).forEach((sound) => {
       sound.load();
     });
   }
@@ -122,7 +122,7 @@ class AudioManager {
    * Clean up audio resources
    */
   dispose() {
-    Object.values(this.sounds).forEach(sound => {
+    Object.values(this.sounds).forEach((sound) => {
       sound.pause();
       sound.src = '';
     });
@@ -139,7 +139,6 @@ export const SOUND_NAMES = {
   FIREBALL: 'fireball',
   FIREBALL_IMPACT: 'fireballImpact',
 };
-
 
 // Export a singleton instance
 export const audioManager = new AudioManager();

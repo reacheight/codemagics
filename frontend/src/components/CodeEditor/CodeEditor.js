@@ -43,7 +43,9 @@ export const CodeEditor = ({
   onCodeChange,
   onErrorsClear,
 }) => {
-  const [isCommandsOpen, setIsCommandsOpen] = useState(instructions.newCommands && instructions.newCommands.length > 0);
+  const [isCommandsOpen, setIsCommandsOpen] = useState(
+    instructions.newCommands && instructions.newCommands.length > 0,
+  );
   const { height: innerHeight, width: windowWidth } = useWindowSize();
 
   const commands = [...instructions.newCommands, ...instructions.prevCommands];
@@ -58,7 +60,7 @@ export const CodeEditor = ({
     autocompletion({
       override: [getCompletions(options)],
     }),
-    indentUnit.of("    "),
+    indentUnit.of('    '),
   ];
   const width = 529;
 
