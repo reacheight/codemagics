@@ -4,7 +4,6 @@ import { Layout } from '../Layout/Layout';
 import { ActionButton } from '../ActionButton/ActionButton';
 import codemagicsVideo from '../../assets/codemagics.webm';
 import theoryImage from '../../assets/theory.webp';
-import pythonImage from '../../assets/python.webp';
 import cloudImage from '../../assets/cloud.webp';
 import tgPostImage from '../../assets/tg-post.jpg';
 import tgLogo from '../../assets/tg-logo.png';
@@ -24,21 +23,6 @@ import {
   FeatureVideo,
   FeatureTitle,
   FeatureDescription,
-  CurriculumContainer,
-  CurriculumSection,
-  ModulesList,
-  ModuleCard,
-  ModuleTitle,
-  ModuleSubtitle,
-  CurriculumContent,
-  CurriculumHeader,
-  CurriculumBody,
-  CurriculumLeftSection,
-  CurriculumRightSection,
-  CurriculumTitle,
-  LevelsCount,
-  TopicsGrid,
-  TopicTag,
   DemoLevelSkeletonWrapper,
   SkeletonMapContainer,
   SkeletonGameField,
@@ -133,59 +117,10 @@ const TelegramPost = () => (
 
 export const LandingPage = () => {
   const navigate = useNavigate();
-  const [selectedModule, setSelectedModule] = React.useState(1);
 
   const handleContinuePlaying = () => {
     navigate('/game');
   };
-
-  const modules = [
-    {
-      id: 1,
-      title: 'Модуль 1',
-      subtitle: 'Первые шаги',
-      levelsCountSpan: '23 уровня',
-      topics: [
-        'Знакомство с платформой',
-        'Основы синтаксиса Python',
-        'Методы',
-        'Аргументы',
-        'Строки',
-        'Комментарии',
-        'Переменные',
-        'Циклы while',
-        'if-выражения',
-      ],
-      isReady: true,
-    },
-    {
-      id: 2,
-      title: 'Модуль 2',
-      subtitle: 'Изучаем основы',
-      levelsCountSpan: '25 уровней',
-      topics: [
-        'Циклы for',
-        'if-else-выражения',
-        'Типы данных',
-        'Математические операции',
-        'Операторы сравнения',
-        'Логические операторы',
-      ],
-      isReady: false,
-    },
-    {
-      id: 3,
-      title: 'Модуль 3',
-      subtitle: 'Расширяем знания',
-      levelsCountSpan: '30 уровней',
-      topics: ['Функции', 'Списки', 'Кортежи', 'Словари', 'Рекурсия'],
-      isReady: false,
-    },
-  ];
-
-  const selectedModuleData = modules.find(
-    (module) => module.id === selectedModule,
-  );
 
   return (
     <Layout isHeaderTransparent>
@@ -236,7 +171,11 @@ export const LandingPage = () => {
                 Наш Telegram канал
               </ActionButton>
               <Title>
-                Увлекательная игра для обучения детей программированию
+                Бесплатная игра
+                <br />
+                для изучения основ программирования
+                <br />
+                на Python
               </Title>
               <Subtitle>
                 Прямо в браузере — не нужно ничего устанавливать. Обучение с
@@ -246,7 +185,7 @@ export const LandingPage = () => {
                 disabled={false}
                 shadowColor="#1B4B82"
                 frontColor="#2D7CD4"
-                alt={'Попробовать бесплатно'}
+                alt={'Начать программировать'}
                 onClick={handleContinuePlaying}
                 width={300}
                 height={50}
@@ -284,8 +223,6 @@ export const LandingPage = () => {
             </FeatureVideo>
           </FeatureSection>
 
-          <TelegramPost />
-
           <FeatureSection>
             <FeatureContent>
               <FeatureTitle>
@@ -304,85 +241,7 @@ export const LandingPage = () => {
             </FeatureImage>
           </FeatureSection>
 
-          <FeatureSection>
-            <FeatureContent>
-              <FeatureTitle>Python — язык №1</FeatureTitle>
-              <FeatureDescription>
-                Мы обучаем самому популярному языку программирования в мире.
-                Питон используют в Яндексе и Google, на нём пишут сайты, игры и
-                искусственный интеллект.
-              </FeatureDescription>
-            </FeatureContent>
-            <FeatureImage>
-              <img src={pythonImage} alt="Python — язык программирования" />
-            </FeatureImage>
-          </FeatureSection>
-
-          <CurriculumContainer>
-            <FeatureTitle>Программа обучения</FeatureTitle>
-            <CurriculumSection>
-              <ModulesList>
-                {modules.map((module) => (
-                  <ModuleCard
-                    key={module.id}
-                    isActive={selectedModule === module.id}
-                    onClick={() => setSelectedModule(module.id)}
-                  >
-                    <ModuleTitle isActive={selectedModule === module.id}>
-                      {module.title}
-                    </ModuleTitle>
-                    <ModuleSubtitle isActive={selectedModule === module.id}>
-                      {module.subtitle}
-                    </ModuleSubtitle>
-                  </ModuleCard>
-                ))}
-              </ModulesList>
-
-              <CurriculumContent>
-                <CurriculumHeader>
-                  <CurriculumTitle>{selectedModuleData?.title}</CurriculumTitle>
-                </CurriculumHeader>
-
-                <CurriculumBody>
-                  <CurriculumLeftSection>
-                    <TopicsGrid>
-                      {selectedModuleData?.topics.map((topic, index) => (
-                        <TopicTag key={index}>{topic}</TopicTag>
-                      ))}
-                    </TopicsGrid>
-                  </CurriculumLeftSection>
-
-                  <CurriculumRightSection>
-                    {selectedModuleData?.isReady ? (
-                      <>
-                        <LevelsCount>
-                          {selectedModuleData?.levelsCountSpan}
-                        </LevelsCount>
-                        <ActionButton
-                          onClick={handleContinuePlaying}
-                          size="large"
-                        >
-                          Начать программировать
-                        </ActionButton>
-                      </>
-                    ) : (
-                      <>
-                        <LevelsCount>В разработке</LevelsCount>
-                        <ActionButton
-                          onClick={() =>
-                            window.open('https://t.me/codemagics', '_blank')
-                          }
-                          size="large"
-                        >
-                          Следить в Telegram
-                        </ActionButton>
-                      </>
-                    )}
-                  </CurriculumRightSection>
-                </CurriculumBody>
-              </CurriculumContent>
-            </CurriculumSection>
-          </CurriculumContainer>
+          <TelegramPost />
         </FeaturesContainer>
       </LandingContainer>
     </Layout>

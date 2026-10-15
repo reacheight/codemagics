@@ -14,7 +14,7 @@ export const Header = ({ isTransparent, isLanding }) => {
       </Link>
       {isLanding && (
         <ActionButton onClick={() => navigate('/game')}>
-          Начать программировать
+          Перейти в игру
         </ActionButton>
       )}
     </HeaderContent>
