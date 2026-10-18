@@ -4,13 +4,13 @@ import { HeaderContent, Logo } from './styled';
 import { Link } from 'react-router-dom';
 import { ActionButton } from '../ActionButton/ActionButton';
 
-export const Header = ({ isTransparent, isLanding }) => {
+export const Header = ({ isLanding }) => {
   const navigate = useNavigate();
 
   return (
-    <HeaderContent isTransparent={isTransparent}>
+    <HeaderContent isTransparent={isLanding}>
       <Link to={'/'}>
-        <Logo src={'/logo.webp'} alt="App Logo" isTransparent={isTransparent} />
+        <Logo src={'/logo.webp'} alt="App Logo" isTransparent={isLanding} />
       </Link>
       {isLanding && (
         <ActionButton onClick={() => navigate('/game')}>

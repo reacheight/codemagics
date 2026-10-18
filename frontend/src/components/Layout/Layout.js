@@ -4,14 +4,10 @@ import { Header } from '../Header/Header';
 
 const LayoutWrapper = styled.div``;
 
-export const Layout = ({
-  children,
-  isHeaderTransparent = false,
-  isGamePage = false,
-}) => {
+export const Layout = ({ children, isLanding }) => {
   return (
     <LayoutWrapper>
-      <Header isTransparent={isHeaderTransparent} isLanding={!isGamePage} />
+      <Header isLanding={isLanding} />
       {children}
     </LayoutWrapper>
   );

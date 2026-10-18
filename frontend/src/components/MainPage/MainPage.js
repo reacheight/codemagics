@@ -44,7 +44,7 @@ export const MainPage = () => {
   }
 
   return (
-    <Layout isGamePage>
+    <Layout isLanding={false}>
       <Container>
         <ModuleCard levelsCount={game.levels} />
 

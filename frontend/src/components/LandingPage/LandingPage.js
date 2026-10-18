@@ -23,11 +23,6 @@ import {
   FeatureVideo,
   FeatureTitle,
   FeatureDescription,
-  DemoLevelSkeletonWrapper,
-  SkeletonMapContainer,
-  SkeletonGameField,
-  SkeletonCell,
-  SkeletonEditorContainer,
   CloudsContainer,
   CloudImage,
   TelegramPostContainer,
@@ -53,21 +48,6 @@ const DemoLevel = lazy(() =>
   import('../DemoLevel/DemoLevel').then((module) => ({
     default: module.DemoLevel,
   })),
-);
-
-const LandingPageDemoSkeleton = () => (
-  <DemoLevelSkeletonWrapper>
-    <SkeletonMapContainer>
-      <SkeletonGameField>
-        {Array(16)
-          .fill(null)
-          .map((_, index) => (
-            <SkeletonCell key={index} />
-          ))}
-      </SkeletonGameField>
-    </SkeletonMapContainer>
-    <SkeletonEditorContainer></SkeletonEditorContainer>
-  </DemoLevelSkeletonWrapper>
 );
 
 const TelegramPost = () => (
@@ -118,12 +98,8 @@ const TelegramPost = () => (
 export const LandingPage = () => {
   const navigate = useNavigate();
 
-  const handleContinuePlaying = () => {
-    navigate('/game');
-  };
-
   return (
-    <Layout isHeaderTransparent>
+    <Layout isLanding>
       <LandingContainer>
         <HeroContainer>
           <CloudsContainer>
@@ -186,7 +162,7 @@ export const LandingPage = () => {
                 shadowColor="#1B4B82"
                 frontColor="#2D7CD4"
                 alt={'Начать программировать'}
-                onClick={handleContinuePlaying}
+                onClick={() => navigate('/game')}
                 width={300}
                 height={50}
                 shadowHeight={15}
@@ -194,9 +170,7 @@ export const LandingPage = () => {
               />
             </LeftColumn>
             <RightColumn>
-              <React.Suspense fallback={<LandingPageDemoSkeleton />}>
-                <DemoLevel />
-              </React.Suspense>
+              <DemoLevel />
             </RightColumn>
           </HeroSection>
         </HeroContainer>
