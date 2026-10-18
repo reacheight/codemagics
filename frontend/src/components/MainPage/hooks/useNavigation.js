@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '../constants';
+import { API_ENDPOINTS } from '../../../constants/gameConstants';
 
 export const useNavigation = () => {
   const navigate = useNavigate();
 
   const handleLevelClick = useCallback(
-    (level) => {
-      const levelPath = ROUTES.getLevelPath(level);
+    (game, level) => {
+      const levelPath = API_ENDPOINTS.LEVEL(game, level);
 
       navigate(levelPath);
     },

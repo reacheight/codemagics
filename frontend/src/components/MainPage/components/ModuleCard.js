@@ -13,9 +13,8 @@ import {
 import module1Preview from '../../../assets/module1-preview.webp';
 import { MODULE_CONFIG, UI_TEXT } from '../constants';
 
-export const ModuleCard = () => {
-  const { title, totalLevels, description, tags, mobileHiddenTagsCount } =
-    MODULE_CONFIG;
+export const ModuleCard = ({ levelsCount }) => {
+  const { title, description, tags, mobileHiddenTagsCount } = MODULE_CONFIG;
   const { moduleNumber, levelsText, altText } = UI_TEXT;
 
   return (
@@ -28,7 +27,7 @@ export const ModuleCard = () => {
       <ModuleInfo>
         <ModuleTitle>{title}</ModuleTitle>
         <LevelCount>
-          {totalLevels} {levelsText}
+          {levelsCount} {levelsText}
         </LevelCount>
 
         <Description>{description}</Description>

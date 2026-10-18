@@ -74,7 +74,6 @@ export const Level = () => {
 
   const gameExecution = useGameExecution();
 
-  const [game, setGame] = useState(null);
   const [initialLevelData, setInitialLevelData] = useRefState(null);
   const [levelData, setLevelData] = useRefState(null);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
@@ -88,7 +87,7 @@ export const Level = () => {
   const [dragStart, setDragStart] = useRefState({ x: 0, y: 0 });
   const dragAnimationFrame = useRefState(null);
 
-  const { refetchData: refreshGameData } = useGameData();
+  const { game, refetchData: refreshGameData } = useGameData(gameId);
 
   const hasGuid = (data) =>
     data.instructions || data.example || data.newCommands?.length;
@@ -100,11 +99,6 @@ export const Level = () => {
         value: goal.heroText,
       }));
     gameExecution.setHeroTexts(goals);
-  };
-
-  const fetchGames = async () => {
-    const { data } = await axios.get(`${API_ENDPOINTS.GAMES}/${gameId}`);
-    setGame(data);
   };
 
   const fetchLevelData = async () => {
@@ -154,7 +148,6 @@ export const Level = () => {
     (async () => {
       resetAllData();
       await Promise.all([
-        fetchGames(),
         fetchLevelData(),
         fetchInstructions(),
         fetchInitialCode(),

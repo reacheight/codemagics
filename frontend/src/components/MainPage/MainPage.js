@@ -12,7 +12,12 @@ import { LoadingState } from './components/LoadingState';
 import { ErrorState } from './components/ErrorState';
 
 export const MainPage = () => {
-  const { isLoading: isGameDataLoading, error, refetchData } = useGameData();
+  const {
+    game,
+    isLoading: isGameDataLoading,
+    error,
+    refetchData,
+  } = useGameData('forest');
 
   const { mapRef, theoreticalDimensions, convertCoordinates } = useMapLayout();
 
@@ -41,13 +46,13 @@ export const MainPage = () => {
   return (
     <Layout isGamePage>
       <Container>
-        <ModuleCard completedLevelsCount={0} progressPercentage={0} />
+        <ModuleCard levelsCount={game.levels} />
 
         <GameMap
           mapRef={mapRef}
           theoreticalDimensions={theoreticalDimensions}
           convertCoordinates={convertCoordinates}
-          onLevelClick={handleLevelClick}
+          onLevelClick={(level) => handleLevelClick('forest', level)}
           isLevelCompleted={false}
           isLevelCurrent={false}
           isLevelAvailable={true}

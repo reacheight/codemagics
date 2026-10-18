@@ -3,7 +3,6 @@ export const MODULE_CONFIG = {
   title: 'Лесной путь',
   description:
     'Изучите основы программирования в увлекательном путешествии через лес',
-  totalLevels: 23,
   freeLevels: 3,
   tags: [
     'знакомство с платформой',
@@ -53,11 +52,6 @@ export const LEVEL_POSITIONS = [
   { level: 22, bottom: 34, left: 60, scaleX: 1 },
   { level: 23, bottom: 40, left: 65 },
 ];
-
-export const ROUTES = {
-  levelPattern: '/forest/level/:level',
-  getLevelPath: (level) => `/forest/level/${level}`,
-};
 
 export const UI_TEXT = {
   moduleNumber: 'Модуль 1',

@@ -72,10 +72,9 @@ export const STORAGE_KEYS = {
 
 // API endpoints
 export const API_ENDPOINTS = {
-  GAMES: '/games',
+  GAME: (gameId) => `/games/${gameId}`,
   LEVEL: (gameId, levelId) => `/${gameId}/level/${levelId}`,
   LEVEL_RUN: (gameId, levelId) => `/${gameId}/level/${levelId}/run`,
-  LEVEL_COMPLETE: (gameId, levelId) => `/${gameId}/level/${levelId}/complete`,
   LEVEL_INSTRUCTIONS: (gameId, levelId) =>
     `/${gameId}/level/${levelId}/instructions`,
   STARTING_CODE: (gameId, levelId) =>

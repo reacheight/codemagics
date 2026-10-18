@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { axios } from '../api/axios';
-import { API_ENDPOINTS } from '../constants/game';
+import { API_ENDPOINTS } from '../constants/gameConstants';
 
-export const useGameData = () => {
+export const useGameData = (gameId) => {
   const [game, setGame] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchGame = useCallback(async () => {
     try {
-      const response = await axios.get(API_ENDPOINTS.gameData);
+      const response = await axios.get(API_ENDPOINTS.GAME(gameId));
       setGame(response.data);
     } catch (err) {
       console.error('Failed to fetch game data:', err);
