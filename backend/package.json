@@ -7,11 +7,10 @@
   },
   "author": "Roman Mendaliev",
   "dependencies": {
-    "axios": "^1.7.7",
+    "axios": "^1.20.0",
     "esper.js": "^0.4.0",
-    "express": "^4.19.2",
-    "node-cache": "^5.1.2",
-    "nodemon": "^3.1.4",
+    "express": "^4.22.3",
+    "nodemon": "^3.1.14",
     "skulpty": "git+https://github.com/reacheight/skulpty.git"
   }
 }
