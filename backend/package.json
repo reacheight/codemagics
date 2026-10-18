@@ -11,6 +11,9 @@
     "esper.js": "^0.4.0",
     "express": "^4.22.3",
     "nodemon": "^3.1.14",
-    "skulpty": "git+https://github.com/reacheight/skulpty.git"
+    "skulpty": "git+https://github.com/reacheight/skulpty.git#af823cd836c3352d51fc936b792614ec2fd6bb1a"
+  },
+  "devDependencies": {
+    "webpack-cli": "^7.2.3"
   }
 }
