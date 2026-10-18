@@ -7,5 +7,3 @@ CodeMagics is a free and open-source [CodeCombat](https://codecombat.com)-style 
 # Development
 
 This project utilizes CodeCombat's [esper.js](https://github.com/codecombat/esper.js) and [skulpty](https://github.com/codecombat/skulpty) libraries to safely interpret Python code.
-
-> **Note**: The backend dependencies must be installed with Node 14, but the backend is started with Node 20. The frontend uses Node 20 for both installation and startup.
