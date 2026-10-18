@@ -8,14 +8,12 @@ import { cors } from './middlewares.js';
 import CodeAnalyzer from './CodeAnalyzer.js';
 import { games } from './games.js';
 import { startingCode } from './startingCode.js';
-import cookieParser from 'cookie-parser';
 
 esper.plugin('lang-python');
 
 const port = process.env.CODEMAGICS_PORT ?? 9000;
 const app = express();
 app.use(express.json());
-app.use(cookieParser());
 app.use(cors);
 
 app.get('/games/:id', (req, res) => {
