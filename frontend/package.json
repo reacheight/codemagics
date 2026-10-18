@@ -21,8 +21,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.3",
-    "react-scripts": "5.0.1",
+    "react-router-dom": "^7.18.4",
     "react-tooltip": "^5.27.1",
     "react-use-websocket": "^4.8.1",
     "styled-components": "^6.1.11",
@@ -48,6 +47,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",
-    "globals": "^15.8.0"
+    "globals": "^15.8.0",
+    "react-scripts": "^5.0.1"
   }
 }
