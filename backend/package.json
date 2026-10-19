@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "yarn nodemon server.js"
+    "dev": "tsx watch src/server.js",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit"
   },
   "author": "Roman Mendaliev",
   "dependencies": {
@@ -13,7 +16,11 @@
     "skulpty": "git+https://github.com/reacheight/skulpty.git#af823cd836c3352d51fc936b792614ec2fd6bb1a"
   },
   "devDependencies": {
-    "webpack-cli": "^7.2.3",
-    "nodemon": "^3.1.14"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "webpack-cli": "^7.2.3"
   }
 }
