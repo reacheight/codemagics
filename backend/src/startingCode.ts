@@ -1,6 +1,6 @@
 const defaultStartingComment = `# пиши код ниже, чтобы управлять персонажем\n# нажми запуск, когда закончишь\n\n`;
 
-export const startingCode = {
+export const startingCode: Record<string, Record<number, string>> = {
   ['forest']: {
     [1]:
       defaultStartingComment +
@@ -87,7 +87,7 @@ while True:
     # если рядом есть враг, то
     if hero.has_enemy_around():
         # найди его и атакуй
-        
+
         # pass ничего не делает, удали это,
         # когда напишешь свой код
         pass

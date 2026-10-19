@@ -9,8 +9,23 @@ import {
   DIRECTIONS,
   COMMAND_NAMES,
 } from './constants.js';
+import type {
+  GameplayCommand,
+  GameplayError,
+  Goal,
+  Level,
+  Point,
+} from './types/game.js';
+
+type ResultGoal = Pick<Goal, 'type' | 'required'> & { completed: boolean };
 
 export default class LevelRunner {
+  level: Level;
+  gameplayError: GameplayError;
+  commands: GameplayCommand[];
+  gemsCollected: number;
+  engine: any;
+
   hero = {
     move_up: (steps = 1) =>
       this.hero.move(DIRECTIONS.UP, steps, COMMAND_NAMES.MOVE_UP),
@@ -30,7 +45,7 @@ export default class LevelRunner {
     fireball_left: () =>
       this.hero.fireball(DIRECTIONS.LEFT, COMMAND_NAMES.FIREBALL_LEFT),
 
-    attack: (targetName) => {
+    attack: (targetName: string) => {
       if (
         !this.level.enemies ||
         this.level.enemies.filter((e) => e.alive).length === 0
@@ -76,7 +91,7 @@ export default class LevelRunner {
       });
     },
 
-    switch: (leverName) => {
+    switch: (leverName: string) => {
       if (!this.level.levers || this.level.levers.length === 0) {
         this.gameplayError = { type: GameplayErrorTypes.NO_LEVERS };
         return;
@@ -136,7 +151,7 @@ export default class LevelRunner {
       });
     },
 
-    is_disabled: (leverName) => {
+    is_disabled: (leverName: string) => {
       if (!this.level.levers || this.level.levers.length === 0) {
         this.gameplayError = { type: GameplayErrorTypes.NO_LEVERS };
         return;
@@ -208,14 +223,14 @@ export default class LevelRunner {
       return false;
     },
 
-    move: (direction, steps, methodName) => {
+    move: (direction: Point, steps: number, methodName: string) => {
       const newHeroPos = structuredClone(this.level.hero);
       newHeroPos.x += direction.x * steps;
       newHeroPos.y += direction.y * steps;
       this.updateHeroPos(newHeroPos, methodName);
     },
 
-    fireball: (direction, commandName) => {
+    fireball: (direction: Point, commandName: string) => {
       if (
         this.level.fireballCount === undefined ||
         this.level.fireballCount === 0
@@ -266,7 +281,7 @@ export default class LevelRunner {
     },
   };
 
-  constructor(level) {
+  constructor(level: Level) {
     this.gameplayError = null;
     this.commands = [];
     this.gemsCollected = 0;
@@ -279,7 +294,7 @@ export default class LevelRunner {
     this.engine.addGlobal('hero', this.hero);
   }
 
-  run(code) {
+  run(code: string) {
     try {
       this.engine.load(code);
       let steps = 0;
@@ -316,7 +331,7 @@ export default class LevelRunner {
       };
     }
 
-    const goals = this.level.goals.map((goal) => {
+    const goals: ResultGoal[] = this.level.goals.map((goal) => {
       return {
         type: goal.type,
         required: goal.required,
@@ -332,7 +347,7 @@ export default class LevelRunner {
     };
   }
 
-  calculateScore(goals) {
+  calculateScore(goals: ResultGoal[]) {
     const optionalGoals = goals.filter((g) => !g.required);
     const hasOptionalGoals = optionalGoals.length != 0;
 
@@ -357,7 +372,7 @@ export default class LevelRunner {
     return variantScore;
   }
 
-  isGoalCompleted(goal, code) {
+  isGoalCompleted(goal: Goal, code: string) {
     switch (goal.type) {
       case 'finish':
       case 'var bridges':
@@ -380,7 +395,7 @@ export default class LevelRunner {
     }
   }
 
-  updateHeroPos(newHeroPosition, moveCommandName) {
+  updateHeroPos(newHeroPosition: Point, moveCommandName: string) {
     while (!arePointsEqual(newHeroPosition, this.level.hero)) {
       const adjustedEnemy = this.level.enemies.find(
         (e) =>
@@ -444,7 +459,7 @@ export default class LevelRunner {
     }
   }
 
-  pushNewCommand(commandName, additionalInfo = {}) {
+  pushNewCommand(commandName: string, additionalInfo = {}) {
     const callExpression =
       this.engine.evaluator.lastASTNodeProcessed.parent.parent;
     const start = callExpression.loc.start;
@@ -498,7 +513,7 @@ export default class LevelRunner {
     });
   }
 
-  isPointOutOfMap(point) {
+  isPointOutOfMap(point: Point) {
     return (
       point.x >= this.level.height ||
       point.y >= this.level.width ||
@@ -507,21 +522,21 @@ export default class LevelRunner {
     );
   }
 
-  isPointHitWall(point) {
+  isPointHitWall(point: Point) {
     return (
       NOT_WALKABLE_TYPES.includes(this.level.grid[point.x][point.y]) &&
       !this.isActiveBridgePoint(point)
     );
   }
 
-  isPointHitWallForFireball(point) {
+  isPointHitWallForFireball(point: Point) {
     return (
       SOLID_WALL_TYPES.includes(this.level.grid[point.x][point.y]) &&
       !this.isActiveBridgePoint(point)
     );
   }
 
-  isActiveBridgePoint(point) {
+  isActiveBridgePoint(point: Point) {
     return this.level.bridges
       .filter((bridge) => bridge.activated)
       .some((bridge) => {
@@ -541,13 +556,13 @@ export default class LevelRunner {
       });
   }
 
-  getAliveEnemyAtPoint(point) {
+  getAliveEnemyAtPoint(point: Point) {
     if (!this.level.enemies || this.level.enemies.length === 0) return;
 
     return this.level.enemies.find((e) => e.alive && arePointsEqual(e, point));
   }
 
-  isHeroInWizardZone(heroPosition) {
+  isHeroInWizardZone(heroPosition: Point) {
     if (!this.level.enemies || this.level.enemies.length === 0) return false;
 
     const wizardsWithZones = this.level.enemies.filter(

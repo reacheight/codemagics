@@ -7,8 +7,9 @@ import {
   hasEnemyAround,
   fireballCommands,
 } from './commands.js';
+import type { Instructions } from './types/api.js';
 
-export const instructions = {
+export const instructions: Record<string, Record<number, Instructions>> = {
   ['forest']: {
     [1]: {
       instructions:

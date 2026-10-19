@@ -1,5 +1,5 @@
 export default class ErrorMessageMapper {
-  static map(esperMessage) {
+  static map(esperMessage: string) {
     if (
       esperMessage.startsWith('Unmatched `(`') ||
       esperMessage.startsWith('Unclosed `(` in function arguments')

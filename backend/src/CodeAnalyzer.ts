@@ -1,5 +1,14 @@
+interface CodeError {
+  message: string;
+  line: number;
+}
+
 export default class CodeAnalyzer {
-  analyze(rawCode, onlyVariablesInAttack, onlyVariablesInSwitch) {
+  analyze(
+    rawCode: string,
+    onlyVariablesInAttack: boolean,
+    onlyVariablesInSwitch: boolean,
+  ): CodeError[] {
     const lines = rawCode.split(/\r\n|\r|\n/);
     for (let i = 0; i < lines.length; i++) {
       const lineCode = lines[i];

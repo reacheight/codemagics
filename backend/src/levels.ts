@@ -1,4 +1,6 @@
-export const levels = {
+import type { Level } from './types/game.js';
+
+export const levels: Record<string, Record<number, Level>> = {
   ['forest']: {
     [1]: {
       height: 3,

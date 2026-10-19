@@ -1,9 +1,11 @@
+import type { CellType } from './types/game.js';
+
 export const CELL_TYPES = {
-  LAWN: 'L',
-  SAND: 'S',
-  TREE: 'T',
-  ROCK: 'R',
-  WATER: 'W',
+  LAWN: 'L' as CellType,
+  SAND: 'S' as CellType,
+  TREE: 'T' as CellType,
+  ROCK: 'R' as CellType,
+  WATER: 'W' as CellType,
 };
 
 export const SOLID_WALL_TYPES = [CELL_TYPES.TREE, CELL_TYPES.ROCK];

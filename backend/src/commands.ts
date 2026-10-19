@@ -1,3 +1,5 @@
+import type { Command } from './types/api.js';
+
 const movingConstants = [
   ['up', 'вверх'],
   ['down', 'вниз'],
@@ -5,40 +7,44 @@ const movingConstants = [
   ['left', 'влево'],
 ];
 
-export const shortMovingCommands = movingConstants.map((constants) => ({
-  code: `hero.move_${constants[0]}()`,
-  description: `перемещает героя на 1 шаг ${constants[1]}`,
-  example: `hero.move_${constants[0]}()`,
-}));
+export const shortMovingCommands: Command[] = movingConstants.map(
+  (constants) => ({
+    code: `hero.move_${constants[0]}()`,
+    description: `перемещает героя на 1 шаг ${constants[1]}`,
+    example: `hero.move_${constants[0]}()`,
+  }),
+);
 
-export const longMovingCommands = movingConstants.map((constants) => ({
-  code: `hero.move_${constants[0]}(steps)`,
-  description: `перемещает героя на \`steps\` шагов ${constants[1]}`,
-  example: `hero.move_${constants[0]}(3)`,
-  autocompleteValue: `hero.move_${constants[0]}(#{1})`,
-}));
+export const longMovingCommands: Command[] = movingConstants.map(
+  (constants) => ({
+    code: `hero.move_${constants[0]}(steps)`,
+    description: `перемещает героя на \`steps\` шагов ${constants[1]}`,
+    example: `hero.move_${constants[0]}(3)`,
+    autocompleteValue: `hero.move_${constants[0]}(#{1})`,
+  }),
+);
 
-export const attackCommand = {
+export const attackCommand: Command = {
   code: 'hero.attack(enemy)',
   description: 'атакует врага по имени `enemy`, если он находится рядом',
   example: 'hero.attack("John")',
   autocompleteValue: 'hero.attack(${1})',
 };
 
-export const switchCommand = {
+export const switchCommand: Command = {
   code: 'hero.switch(lever)',
   description: 'переключает рычаг с названием `lever`, если он находится рядом',
   example: 'hero.switch("Мост")',
   autocompleteValue: 'hero.switch(${1})',
 };
 
-export const findNearestEnemy = {
+export const findNearestEnemy: Command = {
   code: 'hero.find_nearest_enemy()',
   description: 'возвращает ближайшего живого врага',
   example: 'enemy = hero.find_nearest_enemy()\nhero.attack(enemy)',
 };
 
-export const hasEnemyAround = {
+export const hasEnemyAround: Command = {
   code: 'hero.has_enemy_around()',
   description:
     'сообщает, есть ли живой враг на соседних с твоим персонажем клетках',
@@ -46,7 +52,7 @@ export const hasEnemyAround = {
     'if hero.has_enemy_around():\n    enemy = hero.find_nearest_enemy()\n    hero.attack(enemy)',
 };
 
-export const fireballCommands = movingConstants.map((constants) => ({
+export const fireballCommands: Command[] = movingConstants.map((constants) => ({
   code: `hero.fireball_${constants[0]}()`,
   description: `кидает ${constants[1]} огненный шар, который уничтожает врагов`,
   example: `hero.fireball_${constants[0]}()`,
