@@ -29,3 +29,27 @@ button {
   cursor: pointer;
   font: inherit;
 }
+
+@font-face {
+  font-family: 'Inter';
+  src:
+    local('Inter'),
+    url(./assets/fonts/Inter.woff2) format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src:
+    local('Nunito'),
+    url(./assets/fonts/Nunito.woff2) format('woff2');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src:
+    local('Montserrat'),
+    url(./assets/fonts/Montserrat.woff2) format('woff2');
+  font-display: swap;
+}
