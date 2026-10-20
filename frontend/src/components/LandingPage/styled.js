@@ -110,7 +110,8 @@ export const Subtitle = styled.p`
 
 export const FeaturesContainer = styled.div`
   min-width: 100%;
-  background: linear-gradient(rgba(79, 142, 247, 0.06) 1px, transparent 1px),
+  background:
+    linear-gradient(rgba(79, 142, 247, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(79, 142, 247, 0.06) 1px, transparent 1px),
     radial-gradient(
       1200px 400px at 85% 10%,

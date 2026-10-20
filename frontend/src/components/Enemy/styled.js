@@ -162,32 +162,32 @@ export const Wrapper = styled.div`
   z-index: ${({ x }) => x};
   transform: scale(${({ isBig }) => (isBig ? 2 : 1)});
   transition: ${({ spedUp }) => css`
-    right ${spedUp ? 100 : 150}ms linear, 
+    right ${spedUp ? 100 : 150}ms linear,
     bottom ${spedUp ? 100 : 150}ms linear;
   `}
     ${({ shift, isBig, nameHidden, enemyType }) => {
-    const offsets = NAME_OFFSETS[enemyType];
+      const offsets = NAME_OFFSETS[enemyType];
 
-    let baseOffset;
-    if (nameHidden) {
-      baseOffset = offsets.hidden;
-    } else if (isBig) {
-      baseOffset = offsets.big;
-    } else {
-      baseOffset = offsets.normal;
-    }
+      let baseOffset;
+      if (nameHidden) {
+        baseOffset = offsets.hidden;
+      } else if (isBig) {
+        baseOffset = offsets.big;
+      } else {
+        baseOffset = offsets.normal;
+      }
 
-    return css`
-      bottom: ${baseOffset + shift.bottom}px;
-      right: ${shift.right}px;
-    `;
-  }}
+      return css`
+        bottom: ${baseOffset + shift.bottom}px;
+        right: ${shift.right}px;
+      `;
+    }}
     ${({ x, y }) => css`
-    grid-row-start: ${x + 1};
-    grid-row-end: ${x + 2};
-    grid-column-start: ${y + 1};
-    grid-column-end: ${y + 2};
-  `};
+      grid-row-start: ${x + 1};
+      grid-row-end: ${x + 2};
+      grid-column-start: ${y + 1};
+      grid-column-end: ${y + 2};
+    `};
 `;
 
 export const Name = styled.span`
@@ -267,12 +267,12 @@ export const Image = styled.div`
     `}
 
    ${({ alive, direction, spedUp }) => {
-     if (!alive)
-       return css`
-         animation:
-           ${direction === 'right' ? leftFallAnimation : rightFallAnimation}
-             ${spedUp ? 500 : 1000}ms ease-out forwards,
-           ${fadeAnimation} 2s ease-out forwards;
-       `;
-   }}
+    if (!alive)
+      return css`
+        animation:
+          ${direction === 'right' ? leftFallAnimation : rightFallAnimation}
+            ${spedUp ? 500 : 1000}ms ease-out forwards,
+          ${fadeAnimation} 2s ease-out forwards;
+      `;
+  }}
 `;

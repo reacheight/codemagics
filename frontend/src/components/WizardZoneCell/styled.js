@@ -44,7 +44,7 @@ export const WizardCell = styled.div`
       : 'none'};
 
   animation: ${({ isWizardAlive }) =>
-    isWizardAlive ? wizardPulse : wizardFadeOut}
+      isWizardAlive ? wizardPulse : wizardFadeOut}
     ${({ isWizardAlive }) => (isWizardAlive ? '2s' : '1.2s')} ease-in-out
     ${({ isWizardAlive }) => (isWizardAlive ? 'infinite' : 'forwards')};
 

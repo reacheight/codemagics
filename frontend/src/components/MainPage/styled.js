@@ -269,11 +269,11 @@ export const Level = styled.button`
   width: 30px;
   height: 30px;
   background: url(${({ current, completed }) =>
-    current
-      ? currentLevelIcon
-      : completed
-        ? completedLevelIcon
-        : unavailableLevelIcon})
+      current
+        ? currentLevelIcon
+        : completed
+          ? completedLevelIcon
+          : unavailableLevelIcon})
     no-repeat center;
   background-size: contain;
 
